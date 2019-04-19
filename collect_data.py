@@ -18,7 +18,7 @@ while(cap.isOpened()):
     ret, frame = cap.read()
     if (ret != True):
         break
-    if (frameId % 2 == 0):
+    if (frameId % 5 == 0):
         filename ="data/frame%d.jpg" % count;count+=1
         cv2.imwrite(filename, frame)
 cap.release()
