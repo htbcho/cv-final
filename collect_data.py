@@ -15,6 +15,7 @@ print(frameRate)
 x=1
 while(cap.isOpened()):
     frameId = cap.get(1) #current frame number
+    print(frameId)
     ret, frame = cap.read()
     if (ret != True):
         break
