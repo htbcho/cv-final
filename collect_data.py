@@ -21,7 +21,7 @@ while(cap.isOpened()):
         break
     if (frameId % 5 == 0):
         filename ="data/frame%d.jpg" % count;count+=1
-        print(type(frame))
+        frame = frame[0:280, 1000:1280, :]
         frame = resize(frame, preserve_range=True, output_shape=(224,224)).astype(int)
         cv2.imwrite(filename, frame)
 cap.release()
