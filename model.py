@@ -19,7 +19,7 @@ def preprocess_image(file):
     img = image.load_img(train_dir + "/" + file)
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-    return keras.applications.mobilenet.preprocess_input(img_array_expanded_dims)
+    return applications.mobilenet.preprocess_input(img_array_expanded_dims)
 
 base_model = applications.mobilenet.MobileNet(weights='imagenet',include_top=False)
 
