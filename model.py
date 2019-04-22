@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers
+from tensorflow.keras.layers import Activation, Dense
 from tensorflow.keras import optimizers
 from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
