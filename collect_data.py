@@ -25,4 +25,9 @@ while(cap.isOpened()):
         frame = resize(frame, preserve_range=True, output_shape=(224,224)).astype(int)
         cv2.imwrite(filename, frame)
 cap.release()
+
+f= open("label.txt","w+")
+f.write("00001")
+f.close()
+
 print ("Done!")
