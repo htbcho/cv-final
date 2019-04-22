@@ -16,7 +16,7 @@ train_dir = "/home/ella_feldmann/cv-final/data"
 
 for filename in os.listdir(train_dir):
     print("hello")
-    img = image.load_img(train_dir + filename, target_size=(224, 224))
+    img = image.load_img(train_dir + "/" + filename, target_size=(224, 224))
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
     print(applications.mobilenet.preprocess_input(img_array_expanded_dims))
