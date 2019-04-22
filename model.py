@@ -23,7 +23,7 @@ def preprocess_image(file):
 
 base_model = applications.mobilenet.MobileNet(weights='imagenet',include_top=False)
 
-x = model.output
+x = base_model.output
 x=GlobalAveragePooling2D()(x)
 x=Dense(1024,activation='relu')(x)
 x=Dense(1024,activation='relu')(x)
