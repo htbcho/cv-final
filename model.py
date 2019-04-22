@@ -31,6 +31,9 @@ x=Dense(1024,activation='relu')(x)
 x=Dense(512,activation='relu')(x)
 preds=Dense(2,activation='softmax')(x)
 
+model=Model(inputs=base_model.input,outputs=preds)
+
+
 for layer in model.layers[:20]:
     layer.trainable=False
 for layer in model.layers[20:]:
