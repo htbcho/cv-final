@@ -18,9 +18,8 @@ train_dir = "/home/ella_feldmann/cv-final/data"
 def preprocess_image(file):
     img = image.load_img(train_dir + "/" + file)
     img_array = image.img_to_array(img)
-    print(img_array.shape)
-    return img_array
-
+    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+    return keras.applications.mobilenet.preprocess_input(img_array_expanded_dims)
 
 base_model = applications.mobilenet.MobileNet(weights='imagenet',include_top=False)
 
@@ -32,7 +31,6 @@ x=Dense(512,activation='relu')(x)
 preds=Dense(2,activation='softmax')(x)
 
 model=Model(inputs=base_model.input,outputs=preds)
-
 
 for layer in model.layers[:20]:
     layer.trainable=False
