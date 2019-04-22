@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Activation, Dense
 from tensorflow.keras import optimizers
 from tensorflow.keras import models
 from tensorflow.keras import applications
-from keras.applications import imagenet_utils
+from tensorflow.keras.applications import imagenet_utils
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 import os
