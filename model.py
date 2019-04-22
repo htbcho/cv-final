@@ -40,4 +40,3 @@ for layer in model.layers[20:]:
 for filename in os.listdir(train_dir):
     preprocessed_image = preprocess_image(filename)
     result = base_model.predict(preprocessed_image)
-    print(results)
