@@ -9,7 +9,7 @@ import os
 
 img_width, img_height = 224, 224
 
-train_dir = "~/data"
+train_dir = "/home/ella_feldmann/cv-final/data"
 # validation_dir = "data/val"
 
 
