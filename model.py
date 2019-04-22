@@ -5,69 +5,36 @@ from tensorflow.keras import optimizers
 from tensorflow.keras import models
 from tensorflow.keras import applications
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import os
 
 img_width, img_height = 224, 224
 
-train_data_dir = "data/train"
-validation_data_dir = "data/val"
+train_dir = "/data/"
+# validation_dir = "data/val"
 
-# model = applications.VGG19(weights = "imagenet", include_top=False, input_shape = (img_width, img_height, 3))
-mobile = applications.mobilenet.MobileNet()
-print(model.summary())
 
-for layer in model.layers[:5]:
-    layer.trainable = False
-
-x = model.output
-x = Flatten()(x)
-x = Dense(1024, activation="relu")(x)
-x = Dropout(0.5)(x)
-x = Dense(1024, activation="relu")(x)
-predictions = Dense(4, activation="softmax")(x)
-
-model_final = Model(input = model.input, output = predictions)
-model_final.compile(loss = "categorical_crossentropy", optimizer = optimizers.SGD(lr=0.0001, momentum=0.9), metrics=["accuracy"])
-
-# Initiate the train and test generators with data Augumentation
-# train_datagen = ImageDataGenerator(
-# rescale = 1./255,
-# horizontal_flip = True,
-# fill_mode = "nearest",
-# zoom_range = 0.3,
-# width_shift_range = 0.3,
-# height_shift_range=0.3,
-# rotation_range=30)
+for filename in os.listdir(train_dir):
+    print("hello")
+    img = image.load_img(filename, target_size=(224, 224))
+    img_array = image.img_to_array(img)
+    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+    print(applications.mobilenet.preprocess_input(img_array_expanded_dims))
+#     return keras.applications.mobilenet.preprocess_input(img_array_expanded_dims)
 #
-# test_datagen = ImageDataGenerator(
-# rescale = 1./255,
-# horizontal_flip = True,
-# fill_mode = "nearest",
-# zoom_range = 0.3,
-# width_shift_range = 0.3,
-# height_shift_range=0.3,
-# rotation_range=30)
+# # model = applications.VGG19(weights = "imagenet", include_top=False, input_shape = (img_width, img_height, 3))
+# base_model = applications.mobilenet.MobileNet(weights='imagenet',include_top=False)
+# print(base_model.summary())
 #
-# train_generator = train_datagen.flow_from_directory(
-# train_data_dir,
-# target_size = (img_height, img_width),
-# batch_size = batch_size,
-# class_mode = "categorical")
+# x = model.output
+# x=GlobalAveragePooling2D()(x)
+# x=Dense(1024,activation='relu')(x)
+# x=Dense(1024,activation='relu')(x)
+# x=Dense(512,activation='relu')(x)
+# preds=Dense(2,activation='softmax')(x)
 #
-# validation_generator = test_datagen.flow_from_directory(
-# validation_data_dir,
-# target_size = (img_height, img_width),
-# class_mode = "categorical")
+# model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 #
-# # Save the model according to the conditions
-# checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
-# early = EarlyStopping(monitor='val_acc', min_delta=0, patience=10, verbose=1, mode='auto')
-#
-#
-# # Train the model
-# model_final.fit_generator(
-# train_generator,
-# samples_per_epoch = nb_train_samples,
-# epochs = epochs,
-# validation_data = validation_generator,
-# nb_val_samples = nb_validation_samples,
-# callbacks = [checkpoint, early])
+# step_size_train=train_generator.n//train_generator.batch_size
+# model.fit_generator(generator=train_generator,
+#                    steps_per_epoch=step_size_train,
+#                    epochs=10)
