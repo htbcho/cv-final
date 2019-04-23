@@ -13,8 +13,7 @@ import os
 
 img_width, img_height = 224, 224
 
-train_dir = "/home/ella_feldmann/cv-final/data/train/"
-validation_dir = "/home/ella_feldmann/cv-final/data/valid/"
+train_dir = "/home/ella_feldmann/cv-final/train/"
 
 def preprocess_image(file):
     img = image.load_img(train_dir + "/" + file)
@@ -57,7 +56,6 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  shuffle=True)
 
 
-
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
 
@@ -68,6 +66,9 @@ model.fit_generator(generator=train_generator,
                     epochs=10
 )
 
+print("FINISHED TRAINING")
+
 for filename in os.listdir(train_dir):
     preprocessed_image = preprocess_image(filename)
-    result = base_model.predict(preprocessed_image)
+    result = model.predict(preprocessed_image)
+    print(result)
