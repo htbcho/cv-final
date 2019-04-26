@@ -13,7 +13,9 @@ import os
 
 img_width, img_height = 224, 224
 
-train_dir = "/home/ella_feldmann/cv-final/train/"
+train_dir = "/home/ella_feldmann/asl_alphabet_train/"
+test_dir = "/home/ella_feldmann/asl_alphabet_test"
+
 
 def preprocess_image(file):
     img = image.load_img(train_dir + "/" + file)
