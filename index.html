@@ -7,13 +7,13 @@
 <style>
 #container {
 	margin: 0px auto;
-	width: 500px;
-	height: 375px;
+	width: 200px;
+	height: 200px;
 	border: 10px #333 solid;
 }
 #videoElement {
-	width: 500px;
-	height: 375px;
+	width: 200px;
+	height: 200px;
 	background-color: #666;
 }
 </style>
@@ -21,15 +21,16 @@
  
 <body>
 <div id="container">
-	<video autoplay="true" id="videoElement">
+	<video autoplay="true" id="webcamElement">
 	
 	</video>
 </div>
-<script>
-    var video = document.querySelector("#videoElement");
+<script> 
+    // source: https://www.kirupa.com/html5/accessing_your_webcam_in_html5.htm
+    var video = document.querySelector("#webcamElement");
 
     if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: {width: 200, height: 200} })
         .then(function (stream) {
         video.srcObject = stream;
         })
@@ -38,5 +39,6 @@
         });
     }
 </script>
+<script type="module" src="index.js"></script>
 </body>
 </html>
