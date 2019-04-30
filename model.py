@@ -10,6 +10,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
+from sklearn.metrics import confusion_matrix
 
 img_width, img_height = 224, 224
 
@@ -47,7 +48,7 @@ train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
                                                  target_size=(224,224),
                                                  color_mode='rgb',
-                                                 batch_size=20, # total number of training images should be divisible by batch size
+                                                 batch_size=50, # total number of training images should be divisible by batch size
                                                  class_mode='categorical',
                                                  shuffle=True)
 
@@ -55,7 +56,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'validation',
                                                  target_size=(224,224),
                                                  color_mode='rgb',
-                                                 batch_size=20, # total number of training images should be divisible by batch size
+                                                 batch_size=50, # total number of training images should be divisible by batch size
                                                  class_mode='categorical',
                                                  shuffle=True)
 
@@ -70,7 +71,7 @@ model.fit_generator(generator=train_generator,
                     steps_per_epoch=train_step_size,
                     validation_data=valid_generator,
                     validation_steps=valid_step_size,
-                    epochs=10
+                    epochs=2
 )
 
 print("FINISHED TRAINING")
@@ -78,4 +79,5 @@ print("FINISHED TRAINING")
 for filename in os.listdir(train_dir):
     preprocessed_image = preprocess_image(filename)
     result = model.predict(preprocessed_image)
+    print(filename)
     print(result)
