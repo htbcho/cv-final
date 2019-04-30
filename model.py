@@ -10,11 +10,13 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
+from tesnsorflow.keras.models import load_model
+
 
 img_width, img_height = 224, 224
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
-test_dir = "/home/ella_feldmann/asl_alphabet_test"
+test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 
 
 def preprocess_image(file):
@@ -73,9 +75,17 @@ model.fit_generator(generator=train_generator,
                     epochs=2
 )
 
+
+
+model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
+
+
+
+# model = load_model('my_model.h5')
+
 print("FINISHED TRAINING")
 
-for filename in os.listdir(train_dir):
+for filename in os.listdir(test_dir):
     preprocessed_image = preprocess_image(filename)
     result = model.predict(preprocessed_image)
     print(filename)
