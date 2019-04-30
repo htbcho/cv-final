@@ -61,7 +61,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  class_mode='categorical',
                                                  shuffle=True)
 
-model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=tf.train.AdamOptimizer,loss='categorical_crossentropy',metrics=['accuracy'])
 print("COMPILED MODEL")
 
 
@@ -86,7 +86,13 @@ model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
 print("FINISHED TRAINING")
 
 for filename in os.listdir(test_dir):
-    preprocessed_image = preprocess_image(filename)
+    img = image.load_img(train_dir + file)
+    img_array = image.img_to_array(img)
+    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+    preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
     result = model.predict(preprocessed_image)
     print(filename)
     print(result)
+
+output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
+loaded_model = tf.contrib.saved_model.load_keras_model(output_path)
