@@ -61,7 +61,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  class_mode='categorical',
                                                  shuffle=True)
 
-model.compile(optimizer=tf.train.AdamOptimizer,loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 print("COMPILED MODEL")
 
 
