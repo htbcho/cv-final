@@ -30,7 +30,7 @@ x=GlobalAveragePooling2D()(x)
 x=Dense(1024,activation='relu')(x)
 x=Dense(1024,activation='relu')(x)
 x=Dense(512,activation='relu')(x)
-preds=Dense(5,activation='softmax')(x)
+preds=Dense(29,activation='softmax')(x)
 
 model=Model(inputs=base_model.input,outputs=preds)
 
@@ -38,6 +38,8 @@ for layer in model.layers[:20]:
     layer.trainable=False
 for layer in model.layers[20:]:
     layer.trainable=True
+
+print("CONSTRUCTED MODEL")
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
 
@@ -58,6 +60,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  shuffle=True)
 
 model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
+print("COMPILED MODEL")
 
 
 train_step_size=train_generator.n//train_generator.batch_size
