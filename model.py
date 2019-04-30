@@ -81,7 +81,7 @@ model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
 
 
 
-model = load_model('my_model.h5')
+# model = load_model('my_model.h5')
 
 print("FINISHED TRAINING")
 
