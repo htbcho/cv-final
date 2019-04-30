@@ -86,7 +86,7 @@ model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
 print("FINISHED TRAINING")
 
 for filename in os.listdir(test_dir):
-    img = image.load_img(train_dir + filename)
+    img = image.load_img(test_dir + filename)
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
     preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
