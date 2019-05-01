@@ -41,6 +41,10 @@ for layer in model.layers[:20]:
 for layer in model.layers[20:]:
     layer.trainable=True
 
+
+output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
+# loaded_model = tf.contrib.saved_model.load_keras_model(output_path)
+
 print("CONSTRUCTED MODEL")
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
@@ -61,20 +65,17 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  class_mode='categorical',
                                                  shuffle=True)
 
-model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
-print("COMPILED MODEL")
-
+model.compile(optimizer=tf.train.AdagradOptimizer,loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
 
-model.fit_generator(generator=train_generator,
+history = model.fit_generator(generator=train_generator,
                     steps_per_epoch=train_step_size,
                     validation_data=valid_generator,
                     validation_steps=valid_step_size,
                     epochs=1
 )
-
 
 
 print("FINISHED TRAINING")
@@ -90,4 +91,3 @@ for filename in os.listdir(test_dir):
     print(labels[np.argmax(result)])
 
 output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
-loaded_model = tf.contrib.saved_model.load_keras_model(output_path)
