@@ -16,7 +16,7 @@ test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 
-loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir')
+loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556736099/')
 
 for filename in os.listdir(test_dir):
     img = image.load_img(test_dir + filename)
