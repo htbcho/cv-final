@@ -65,7 +65,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  class_mode='categorical',
                                                  shuffle=True)
 
-model.compile(optimizer=tf.train.AdagradOptimizer,loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
