@@ -17,7 +17,7 @@ img_width, img_height = 224, 224
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
 test_dir = "/home/ella_feldmann/asl_alphabet_test/"
-
+labels = ["A", "B", "C", "D", "del", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "nothing", "O", "P", "Q", "R", "S", "space", "T", "U", "V", "W", "X", "Y", "Z"]
 
 def preprocess_image(file):
     img = image.load_img(train_dir + "/" + file)
@@ -77,12 +77,6 @@ model.fit_generator(generator=train_generator,
 
 
 
-model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
-
-
-
-# model = load_model('my_model.h5')
-
 print("FINISHED TRAINING")
 
 for filename in os.listdir(test_dir):
@@ -92,7 +86,8 @@ for filename in os.listdir(test_dir):
     preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
     result = model.predict(preprocessed_image)
     print(filename)
-    print(result)
+    print(np.shape(result))
+    print(labels[np.argmax(result)])
 
 output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
 loaded_model = tf.contrib.saved_model.load_keras_model(output_path)
