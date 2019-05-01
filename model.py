@@ -40,9 +40,6 @@ for layer in model.layers[20:]:
     layer.trainable=True
 
 
-output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
-# loaded_model = tf.contrib.saved_model.load_keras_model(output_path)
-
 print("CONSTRUCTED MODEL")
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
@@ -89,3 +86,4 @@ for filename in os.listdir(test_dir):
     print(labels[np.argmax(result)])
 
 output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
+loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir')
