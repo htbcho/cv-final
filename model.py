@@ -69,7 +69,7 @@ history = model.fit_generator(generator=train_generator,
                     steps_per_epoch=train_step_size,
                     validation_data=valid_generator,
                     validation_steps=valid_step_size,
-                    epochs=1
+                    epochs=3
 )
 
 
@@ -86,4 +86,3 @@ for filename in os.listdir(test_dir):
     print(labels[np.argmax(result)])
 
 output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
-loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir')
