@@ -27,24 +27,29 @@ var draw = function(video, canvas, context, frameRate) {
     //ok nowwww i think this will be ready for the model
 
     getLabel(image);
-    var label = callbackFunc();
+    // var label = callbackFunc();
 
 
     setTimeout(draw, 1/frameRate, video, canvas, context, frameRate);
     //maybe push img to model here?
 }
 
-function getLabel(image) {
+function getLabel(image, elem) { //eventually pass in letter <some set up stuff: https://stackoverflow.com/questions/11071100/jquery-uncaught-typeerror-illegal-invocation-at-ajax-request-several-eleme>
     $.ajax({
         type: 'POST',
-        url: 'load_test_model.py', //maybe no backlash
+        // context: elem,
+        url: '/load_test_model.py', //maybe no backlash
         data: { param: image},
-        success: callbackFunc
+        processData: false,
+        success: function(label) {
+            console.log(label);
+            // elem.innerHTML = TURN THE LETTER GREEN
+        }
     });
 }
 
-function callbackFunc(response) {
-    label = response;
-}
+// function callbackFunc(response) {
+//     label = response;
+// }
 
 getImage();
