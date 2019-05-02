@@ -1,8 +1,8 @@
 
 
 
-"use strict";
-export class Webcam {
+// "use strict";
+export default class Webcam {
     /**
      * @param {HTMLVideoElement} webcamElement A HTMLVideoElement representing the webcam feed.
      */
@@ -14,12 +14,19 @@ export class Webcam {
      * Captures a frame from the webcam and normalizes it between -1 and 1.
      * Returns a batched image (1-element batch) of shape [1, w, h, c].
      */
-    capture() {
-      video = document.querySelector("#webcamElement");
-      canvas = document.getElementById("container"); //if this doesn't work, try videoElement
-      ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    }
+    // capture() {
+    //   const video = document.querySelector("#webcamElement");
+    //   var canvas = document.getElementById("canvas"); //if this doesn't work, try videoElement (previously container)
+    //   var ctx = canvas.getContext('2d');
+    //   video.addEventListener('play', draw(video, canvas, ctx, 3));
+    // }
+
+    // draw(video, canvas, context, frameRate) {
+    //     ret = ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    //     setTimeout(draw, 1/frameRate, video, canvas, context, frameRate);
+    //     return ret;
+    // }
+    
   
     /**
      * Crops an image tensor so we get a square image with no white space.

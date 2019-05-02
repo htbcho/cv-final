@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>Display Webcam Stream</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="shortcut icon" href="#"/>
  
 <style>
 #container {
@@ -10,21 +12,43 @@
 	width: 200px;
 	height: 200px;
 	border: 10px #333 solid;
+    position: relative;
+}
+#canvas {
+    margin: 0px auto;
+    /* width: 200px;
+	height: 200px; */
+    width: 100%;
+	height: 100%;
+    position: relative;
+    z-index: 1;
+    /* background:transparent; */
 }
 #videoElement {
-	width: 200px;
-	height: 200px;
+	/* width: 200px;
+	height: 200px; */
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%; 
 	background-color: #666;
+}
+#webcam-interaction {
+    width: 100%;
+    height: 50%;
 }
 </style>
 </head>
  
 <body>
-<div id="container">
-	<video autoplay="true" id="webcamElement">
-	
-	</video>
+<div id="webcam-interaction">
+    <div id="container">
+        <video autoplay="true" id="webcamElement"></video>
+        <canvas id="canvas"></canvas>
+    </div>
 </div>
+
 <script> 
     // source: https://www.kirupa.com/html5/accessing_your_webcam_in_html5.htm
     var video = document.querySelector("#webcamElement");
