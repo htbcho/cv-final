@@ -22,7 +22,8 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 true_labels = []
 pred_labels = []
 
-loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
+# loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
+loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556845870/')
 
 for subdir in os.listdir(test_dir):
 
@@ -31,8 +32,9 @@ for subdir in os.listdir(test_dir):
         test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis = 0)
-        result = loaded_model.predict(test_image)
+        test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
 
+        result = loaded_model.predict(test_image)
         true_labels.append(subdir) # True labels
         pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
