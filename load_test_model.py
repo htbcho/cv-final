@@ -11,10 +11,13 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet import preprocess_input
 # import os
 from tensorflow.keras.models import load_model
-# import requests 
+# import requests
 from flask import Flask, request, make_response, jsonify, render_template, Response
 from flask_cors import CORS, cross_origin
 import os
+from PIL import Image
+import requests
+from StringIO import StringIO
 
 
 app = Flask(__name__) #, static_folder='.'
@@ -34,7 +37,9 @@ def index():
 
 @app.route('/model', methods = ['POST']) #what is a file path
 def predict():
-    img = request.form['url']
+    url = request.form['url']
+    response = requests.get(url)
+    img = Image.open(StringIO(response.content))
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
 
@@ -43,14 +48,14 @@ def predict():
     result = loaded_model.predict(preprocessed_image)
     prediction = labels[np.argmax(result)]
 
-    ret = { 'label': prediction}    
+    ret = { 'label': prediction}
     return jsonify(ret)
-    
+
 
     # print(filename)
     # print(np.shape(result))
     # print(labels[np.argmax(result)])
-    
+
     # if request.method == 'POST':
     #     result = prediction
     #     resp = make_response('{"response": '+prediction+'}')
