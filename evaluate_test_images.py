@@ -19,15 +19,16 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
 
 for subdir in os.listdir(test_dir):
-    # test_image = image.load_img(test_dir + filename, target_size = (64, 64))
-    # test_image = image.img_to_array(test_image)
-    # test_image = np.expand_dims(test_image, axis = 0)
-    #
-    # #predict the result
-    # result = loaded_model.predict(test_image)
+
     for filename in os.listdir(test_dir + subdir):
-        print(test_dir + subdir + filename)
-    # print(labels[np.argmax(result)])
+
+        test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
+        test_image = image.img_to_array(test_image)
+        test_image = np.expand_dims(test_image, axis = 0)
+        result = loaded_model.predict(test_image)
+
+        print(subdir)
+        print(labels[np.argmax(result)])
 
     # filenames= os.listdir (".") # get all files' and folders' names in the current directory
 
