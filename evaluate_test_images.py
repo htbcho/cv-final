@@ -19,9 +19,11 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
 
 for filename in os.listdir(test_dir):
-    img = image.load_img(test_dir + filename)
-    img2 = img.resize((64, 64))
-    print(np.shape(img2))
-    result = loaded_model.predict(img2)
+    test_image = image.load_img(test_dir + filename, target_size = (64, 64))
+    test_image = image.img_to_array(test_image)
+    test_image = np.expand_dims(test_image, axis = 0)
+
+    #predict the result
+    result = loaded_model.predict(test_image)
     print(filename)
     print(labels[np.argmax(result)])
