@@ -34,10 +34,10 @@ preds=Dense(29,activation='softmax')(x)
 
 model=Model(inputs=base_model.input,outputs=preds)
 
-for layer in model.layers[:]:
+for layer in model.layers[:20]:
     layer.trainable=False
-# for layer in model.layers[20:]:
-#     layer.trainable=True
+for layer in model.layers[20:]:
+    layer.trainable=True
 
 
 print("CONSTRUCTED MODEL")
@@ -48,7 +48,7 @@ train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
                                                  target_size=(224,224),
                                                  color_mode='rgb',
-                                                 batch_size=50, # total number of training images should be divisible by batch size
+                                                 batch_size=20, # total number of training images should be divisible by batch size
                                                  class_mode='categorical',
                                                  shuffle=True)
 
@@ -56,11 +56,11 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'validation',
                                                  target_size=(224,224),
                                                  color_mode='rgb',
-                                                 batch_size=50, # total number of training images should be divisible by batch size
+                                                 batch_size=20, # total number of training images should be divisible by batch size
                                                  class_mode='categorical',
                                                  shuffle=True)
 
-model.compile(optimizer=tf.train.AdagradOptimizer(0.005), loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
