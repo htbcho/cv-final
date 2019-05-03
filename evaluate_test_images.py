@@ -37,15 +37,16 @@ for subdir in os.listdir(test_dir):
         pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
 
-    confusion = confusion_matrix(true_labels, pred_labels)
+    confusion = confusion_matrix(true_labels, pred_labels, labels)
+    print(confusion)
 
-    plt.figure(0, figsize =(7,7))
-    plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
-    plt.title('Confusion Matrix without Normalization')
-    plt.xlabel('Predicted Label', fontsize = 16)
-    plt.ylabel('True Label', fontsize = 16)
-    plt.xticks(np.arange(29), labels)
-    plt.yticks( np.arange(29), labels)
-    plt.colorbar()
-    thresh = confusion.max() / 2.
-    plt.savefig('confusion_matrix.png')
+    # plt.figure(0, figsize =(7,7))
+    # plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
+    # plt.title('Confusion Matrix without Normalization')
+    # plt.xlabel('Predicted Label', fontsize = 16)
+    # plt.ylabel('True Label', fontsize = 16)
+    # plt.xticks(np.arange(29), labels)
+    # plt.yticks( np.arange(29), labels)
+    # plt.colorbar()
+    # thresh = confusion.max() / 2.
+    # plt.savefig('confusion_matrix.png')
