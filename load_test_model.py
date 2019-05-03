@@ -33,16 +33,16 @@ prediction = ''
 def index():
     return render_template('/index.html', title='Learn ASL!')
 
-img_dir = 'webcam_images/curr.jpg'
+# img_dir = 'webcam_images/curr.jpg'
 
 @app.route('/model', methods = ['POST']) #what is a file path
 def predict():
     url = request.form['url']
-    urllib.request.urlretrieve(url, img_dir)
+    urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
     print("got image")
     print(os.listdir('webcam_images'))
     print(' - - - - - - - ')
-    img = image.load_img(img_dir, target_size=(64,64))
+    img = image.load_img('webcam_images/curr.jpg', target_size=(64,64))
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
 

@@ -6,7 +6,7 @@ $(document).ready(function(){
         const video = document.querySelector("#webcamElement");
         var canvas = document.getElementById("canvas"); //if this doesn't work, try videoElement (previously container)
         var ctx = canvas.getContext('2d');
-        video.addEventListener('play', draw(video, canvas, ctx, .0001));
+        video.addEventListener('play', draw(video, canvas, ctx, 1));
         //set width and height of mirror?????
     }
     //https://github.com/tensorflow/tfjs-examples/blob/master/webcam-transfer-learning/index.js
