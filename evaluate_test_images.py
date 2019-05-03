@@ -12,7 +12,7 @@ from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
 from tensorflow.keras.models import load_model
 
-test_dir = "/home/ella_feldmann/cv-final/A/"
+test_dir = "/home/ella_feldmann/cv-final/test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 
@@ -27,3 +27,10 @@ for filename in os.listdir(test_dir):
     # result = loaded_model.predict(test_image)
     print(filename)
     # print(labels[np.argmax(result)])
+
+    # filenames= os.listdir (".") # get all files' and folders' names in the current directory
+
+# result = []
+# for filename in filenames: # loop through all the files and folders
+#     if os.path.isdir(os.path.join(os.path.abspath("."), filename)): # check whether the current object is a folder or not
+#         result.append(filename)
