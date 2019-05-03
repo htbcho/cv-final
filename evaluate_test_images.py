@@ -16,13 +16,11 @@ test_dir = "/home/ella_feldmann/cv-final/test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 
-loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556737843/')
+loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
 
 for filename in os.listdir(test_dir):
     img = image.load_img(test_dir + filename)
-    img_array = image.img_to_array(img)
-    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-    preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
-    result = loaded_model.predict(preprocessed_image)
+    img2 = img.resize((width, height))
+    result = loaded_model.predict(img2)
     print(filename)
     print(labels[np.argmax(result)])
