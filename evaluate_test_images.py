@@ -37,8 +37,8 @@ for subdir in os.listdir(test_dir):
         pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
 
-    confusion = confusion_matrix(true_labels, pred_labels, labels)
-    print(confusion)
+confusion = confusion_matrix(true_labels, pred_labels, labels)
+print(confusion)
 
     # plt.figure(0, figsize =(7,7))
     # plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
