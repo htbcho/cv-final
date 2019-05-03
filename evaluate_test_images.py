@@ -12,7 +12,7 @@ from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
 from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 
@@ -64,9 +64,7 @@ plt.colorbar()
 plt.title('Confusion Matrix with Normalization')
 thresh = norm_confusion.max() / 2.
 
-for i in range(0,29):
-    for j in range(0, 29):
-        val = norm_confusion[i, j]
-        plt.text(j, i, round(val, 3), horizontalalignment = 'center', color = 'white' if norm_confusion[i, j]>thresh else 'black')
-
 plt.savefig('norm_confusion_matrix.png')
+
+acc = accuracy_score(true_labels, pred_labels)
+print(acc)
