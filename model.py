@@ -34,10 +34,10 @@ preds=Dense(29,activation='softmax')(x)
 
 model=Model(inputs=base_model.input,outputs=preds)
 
-for layer in model.layers[:20]:
+for layer in model.layers[:]:
     layer.trainable=False
-for layer in model.layers[20:]:
-    layer.trainable=True
+# for layer in model.layers[20:]:
+#     layer.trainable=True
 
 
 print("CONSTRUCTED MODEL")
@@ -60,7 +60,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  class_mode='categorical',
                                                  shuffle=True)
 
-model.compile(optimizer=tf.train.AdagradOptimizer(0.0001), loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=tf.train.AdagradOptimizer(0.005), loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
