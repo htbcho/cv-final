@@ -1,7 +1,8 @@
 # Imports for Deep Learning
-from keras.layers import Conv2D, Dense, Dropout, Flatten
-from keras.models import Sequential
-from keras.preprocessing.image import ImageDataGenerator
+import tensorflow as tf
+from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # ensure consistency across runs
 from numpy.random import seed
