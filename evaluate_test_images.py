@@ -17,10 +17,8 @@ from sklearn.metrics import confusion_matrix
 
 
 test_dir = "/home/ella_feldmann/cv-final/test/"
-labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
-label_map = {l: i for i, l in enumerate(labels)} # label indices
+labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] #"del", "nothing", "space"]
 
-print(label_map)
 true_labels = []
 pred_labels = []
 
@@ -43,12 +41,11 @@ for subdir in os.listdir(test_dir):
 
     plt.figure(0, figsize =(7,7))
     plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
-    # classes = ['blowdown', 'other', 'forest', 'cloud', 'blooming']
     plt.title('Confusion Matrix without Normalization')
     plt.xlabel('Predicted Label', fontsize = 16)
     plt.ylabel('True Label', fontsize = 16)
-    # plt.xticks( np.arange(26), (label_map.keys()))
-    # plt.yticks( np.arange(26), (label_map.keys()))
+    plt.xticks(np.arange(26), labels)
+    plt.yticks( np.arange(26), labels)
     plt.colorbar()
     thresh = confusion.max() / 2.
     plt.savefig('confusion_matrix.png')
