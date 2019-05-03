@@ -12,7 +12,7 @@ from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
 from tensorflow.keras.models import load_model
 
-test_dir = "/home/ella_feldmann/cv-final/test/A/"
+test_dir = "/home/ella_feldmann/cv-final/A/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 
