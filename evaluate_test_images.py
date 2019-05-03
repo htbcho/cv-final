@@ -20,7 +20,8 @@ loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/155684
 
 for filename in os.listdir(test_dir):
     img = image.load_img(test_dir + filename)
-    img2 = img.resize((width, height))
+    img2 = img.resize((64, 64))
+    print(np.shape(img2))
     result = loaded_model.predict(img2)
     print(filename)
     print(labels[np.argmax(result)])
