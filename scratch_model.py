@@ -48,3 +48,5 @@ my_model.add(Dense(29, activation='softmax'))
 my_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=["accuracy"])
 
 my_model.fit_generator(train_generator, epochs=5, validation_data=val_generator)
+
+output_path = tf.contrib.saved_model.save_keras_model(model, './scratch_tmp_dir')
