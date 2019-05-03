@@ -11,10 +11,14 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
 from tensorflow.keras.models import load_model
+import matplotlib.pyplot as plt
+
 
 test_dir = "/home/ella_feldmann/cv-final/test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
+true_labels = []
+pred_labels = []
 
 loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
 
@@ -27,12 +31,20 @@ for subdir in os.listdir(test_dir):
         test_image = np.expand_dims(test_image, axis = 0)
         result = loaded_model.predict(test_image)
 
-        print(subdir)
-        print(labels[np.argmax(result)])
+        true_labels.append(subdir) # True labels
+        pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
-    # filenames= os.listdir (".") # get all files' and folders' names in the current directory
 
-# result = []
-# for filename in filenames: # loop through all the files and folders
-#     if os.path.isdir(os.path.join(os.path.abspath("."), filename)): # check whether the current object is a folder or not
-#         result.append(filename)
+    confusion = confusion_matrix(ture_labels, pred_labels)
+
+    plt.figure(0, figsize =(7,7))
+    plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
+    classes = ['blowdown', 'other', 'forest', 'cloud', 'blooming']
+    plt.title('Confusion Matrix without Normalization')
+    plt.xlabel('Predicted Label', fontsize = 16)
+    plt.ylabel('True Label', fontsize = 16)
+    plt.xticks( np.arange(NUM_CLASSES), (label_map.keys()))
+    plt.yticks( np.arange(NUM_CLASSES), (label_map.keys()))
+    plt.colorbar()
+    thresh = confusion.max() / 2.
+    plt.savefig('confusion_matrix.png')
