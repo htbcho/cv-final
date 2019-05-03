@@ -50,3 +50,23 @@ plt.yticks(np.arange(29), labels)
 plt.colorbar()
 thresh = confusion.max() / 2.
 plt.savefig('confusion_matrix.png')
+
+
+
+plt.figure(1, figsize =(7,7))
+norm_confusion = confusion.astype('float') / confusion.sum(axis=1)[:,np.newaxis]
+plt.imshow(norm_confusion, interpolation = 'nearest', cmap = plt.cm.Greens)
+plt.xlabel('Predicted Label', fontsize = 16)
+plt.ylabel('True Label', fontsize = 16)
+plt.xticks( np.arange(29), labels)
+plt.yticks( np.arange(29), labels)
+plt.colorbar()
+plt.title('Confusion Matrix with Normalization')
+thresh = norm_confusion.max() / 2.
+
+for i in range(0,29):
+    for j in range(0, 29):
+        val = norm_confusion[i, j]
+        plt.text(j, i, round(val, 3), horizontalalignment = 'center', color = 'white' if norm_confusion[i, j]>thresh else 'black')
+
+plt.savefig('norm_confusion_matrix.png')
