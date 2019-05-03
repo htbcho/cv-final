@@ -16,7 +16,7 @@ $(document).ready(function(){
         // console.log("draw");
         // var topcanvas = document.getElementById("webcam-interaction");
         var ret = context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var url = canvas.toDataURL("image/jpeg");//replace("image/jpeg", "image/octet-stream");
+        var url = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
         var image = document.getElementById("mirror");
         image.src = url;
         //ok nowwww i think this will be ready for the model

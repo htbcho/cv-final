@@ -9,15 +9,14 @@ from tensorflow.keras import applications
 # from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet import preprocess_input
-# import os
 from tensorflow.keras.models import load_model
-# import requests
 from flask import Flask, request, make_response, jsonify, render_template, Response
 from flask_cors import CORS, cross_origin
 import os
+import urllib.request
 from PIL import Image
 import requests
-from StringIO import StringIO
+from io import StringIO
 
 
 app = Flask(__name__) #, static_folder='.'
@@ -34,21 +33,30 @@ prediction = ''
 def index():
     return render_template('/index.html', title='Learn ASL!')
 
+img_dir = 'webcam_images/curr.jpg'
 
 @app.route('/model', methods = ['POST']) #what is a file path
 def predict():
     url = request.form['url']
-    response = requests.get(url)
-    img = Image.open(StringIO(response.content))
+    urllib.request.urlretrieve(url, img_dir)
+    print("got image")
+    print(os.listdir('webcam_images'))
+    print(' - - - - - - - ')
+    img = image.load_img(img_dir, target_size=(64,64))
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
 
-    loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556737843/')
-    preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
-    result = loaded_model.predict(preprocessed_image)
+    loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
+    # preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
+    result = loaded_model.predict(img_array_expanded_dims)
     prediction = labels[np.argmax(result)]
 
-    ret = { 'label': prediction}
+    ret = { 'label': prediction }
+
+    # print('after model')
+    # print(os.listdir('webcam_images'))
+    # os.remove(img_dir)
+    # print(os.listdir('webcam_images'))
     return jsonify(ret)
 
 
