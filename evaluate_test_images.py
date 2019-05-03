@@ -12,6 +12,8 @@ from tensorflow.keras.applications.mobilenet import preprocess_input
 import os
 from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+
 
 
 test_dir = "/home/ella_feldmann/cv-final/test/"
