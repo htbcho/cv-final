@@ -8,7 +8,7 @@ from skimage.transform import resize   # for resizing images
 
 
 count = 0
-videoFile = "test.mov"
+videoFile = "/Users/ella/Desktop/test-Z.mov"
 cap = cv2.VideoCapture(videoFile)   # capturing the video from the given path
 frameRate = cap.get(5) #frame rate
 #print(frameRate)
@@ -20,14 +20,10 @@ while(cap.isOpened()):
     if (ret != True):
         break
     if (frameId % 5 == 0):
-        filename ="test/test_frame%d.jpg" % count;count+=1
+        filename ="test/Z/test_frame%d.jpg" % count;count+=1
         frame = frame[:,280:1000, :]
-        frame = resize(frame, preserve_range=True, output_shape=(224,224)).astype(int)
+        frame = resize(frame, preserve_range=True, output_shape=(200,200)).astype(int)
         cv2.imwrite(filename, frame)
 cap.release()
-
-#f= open("label.txt","w+")
-#f.write("00001")
-#f.close()
 
 print ("Done!")
