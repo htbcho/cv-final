@@ -20,6 +20,7 @@ test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 def preprocess_image(img):
+    img = image.load_img(train_dir + "/" + img)
     img = image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
