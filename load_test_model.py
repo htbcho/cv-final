@@ -17,6 +17,12 @@ import urllib.request
 from PIL import Image
 import requests
 from io import StringIO
+import cv2
+import matplotlib
+matplotlib.use('PS')
+import matplotlib.pyplot as plt
+
+
 
 
 app = Flask(__name__) #, static_folder='.'
@@ -33,16 +39,17 @@ prediction = ''
 def index():
     return render_template('/index.html', title='Learn ASL!')
 
-# img_dir = 'webcam_images/curr.jpg'
+img_dir = 'webcam_images/curr.jpg'
 
 @app.route('/model', methods = ['POST']) #what is a file path
 def predict():
     url = request.form['url']
     urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
-    print("got image")
-    print(os.listdir('webcam_images'))
-    print(' - - - - - - - ')
+    # print("got image")
+    # print(os.listdir('webcam_images'))
+    # print(' - - - - - - - ')
     img = image.load_img('webcam_images/curr.jpg', target_size=(64,64))
+    print(img)
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
 
@@ -55,7 +62,7 @@ def predict():
 
     # print('after model')
     # print(os.listdir('webcam_images'))
-    # os.remove(img_dir)
+    os.remove(img_dir)
     # print(os.listdir('webcam_images'))
     return jsonify(ret)
 

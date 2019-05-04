@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>Display Webcam Stream</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Fredoka+One|Passion+One" rel="stylesheet">
 <script type="module" src="/static/js/index.js"></script>
 <link rel="shortcut icon" href="#"/>
  
@@ -38,6 +42,7 @@
 #webcam-interaction {
     width: 100%;
     height: 50%;
+    margin-bottom: 100px;
 }
 .canvas_mirror {
   /* height: 100%; */
@@ -48,18 +53,59 @@
   width: 200px;
   /* width: 100%;  */
 }
+#title {
+    margin: 0 auto;
+    text-align: center;
+}
+#header {
+    padding-top: 30px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 60px;
+}
+#instructions {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+    font-size: 18px;
+    font-family: 'Didact Gothic', sans-serif;
+}
+#new-word {
+    margin-bottom: 20px;
+}
+#word-container {
+    display: inline;
+    /* text-align: left; */
+}
+
+body {
+    background-color: #f2bcd1;
+}
+
 </style>
 </head>
  
 <body>
-<div id="webcam-interaction">
-    <div id="container">
-        <video autoplay="true" id="webcamElement"></video>
-        <!-- <canvas id="canvas"></canvas> -->
-        <canvas id="canvas"></canvas> 
-        <img hidden src="" id="mirror" class="canvas_mirror" />
+    <div id="title">
+        <h1 id="header">Let's learn ASL!</h1>
+        <p id="instructions">
+            Hello there! To get started, please allow this website to have camera access by clicking 'Allow' when prompted.
+            Once you see yourself, click the button below to get a new word to sign! Sign one letter at a time to the camera and if you get the letter correct, it will turn green.
+            Once the letter turns green, move on to the next letter! After you have signed all the letters correctly, you can choose a new word.
+        </p>
+        <button type="button" class="btn btn-primary btn-lg" id="new-word">New Word</button>
+        <div id="word-container">
+            <!-- <h2 id=word></h2> -->
+        </div>
     </div>
-</div>
+
+    <div id="webcam-interaction">
+        <div id="container">
+            <video autoplay="true" id="webcamElement"></video>
+            <!-- <canvas id="canvas"></canvas> -->
+            <canvas hidden id="canvas"></canvas> 
+            <img hidden src="" id="mirror" class="canvas_mirror" />
+        </div>
+    </div>
 
 <script> 
     // source: https://www.kirupa.com/html5/accessing_your_webcam_in_html5.htm
