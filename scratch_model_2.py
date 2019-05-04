@@ -35,6 +35,8 @@ def load_images(directory):
 uniq_labels = sorted(os.listdir(train_dir))
 images, labels = load_images(directory = train_dir)
 
+print("made it to here")
+
 if uniq_labels == sorted(os.listdir(test_dir)):
     X_eval, y_eval = load_images(directory = test_dir)
 

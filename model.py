@@ -17,11 +17,11 @@ train_dir = "/home/ella_feldmann/asl_alphabet_train/"
 test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
-def preprocess_image(file):
-    img = image.load_img(train_dir + "/" + file)
-    img_array = image.img_to_array(img)
-    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-    return applications.mobilenet.preprocess_input(img_array_expanded_dims)
+# def preprocess_image(file):
+#     img = image.load_img(train_dir + "/" + file)
+#     img_array = image.img_to_array(img)
+#     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+#     return applications.mobilenet.preprocess_input(img_array_expanded_dims)
 
 base_model = applications.mobilenet.MobileNet(weights='imagenet',include_top=False)
 
