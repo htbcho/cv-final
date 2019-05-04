@@ -31,7 +31,7 @@ model = Model(inputs=base_model.input, outputs=predictions)
 for layer in base_model.layers: # first: train only the top layers (which were randomly initialized)
     layer.trainable = False
 
-model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy' ,metrics=['accuracy'])
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
 
@@ -75,7 +75,7 @@ for layer in model.layers[249:]:
 # we need to recompile the model for these modifications to take effect
 # we use SGD with a low learning rate
 from tensorflow.keras.optimizers import SGD
-model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
+model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
 history = model.fit_generator(generator=train_generator,
                     steps_per_epoch=train_step_size,
