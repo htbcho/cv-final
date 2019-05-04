@@ -3,7 +3,6 @@ np.random.seed(5)
 import tensorflow as tf
 tf.set_random_seed(2)
 import matplotlib.pyplot as plt
-%matplotlib inline
 import os
 import cv2
 import tensorflow.keras
