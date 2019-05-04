@@ -19,12 +19,6 @@ train_dir = "/home/ella_feldmann/asl_alphabet_train/"
 test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
-def preprocess_image(img):
-    img = image.load_img(train_dir + "/" + img)
-    img = image.img_to_array(img)
-    img = np.expand_dims(img, axis=0)
-    img = preprocess_input(img)
-    return img
 
 # dimensions of our images.
 img_width, img_height = 224, 224
@@ -75,7 +69,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # #                      metrics=['accuracy'])
 
 
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_image, validation_split=0.2)
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
@@ -104,6 +98,13 @@ history = model.fit_generator(generator=train_generator,
                     epochs=5
 )
 
+
+def preprocess_image(img):
+    img = image.load_img(train_dir + "/" + img)
+    img = image.img_to_array(img)
+    img = np.expand_dims(img, axis=0)
+    img = preprocess_input(img)
+    return img
 #
 # for subdir in os.listdir(test_dir):
 #
