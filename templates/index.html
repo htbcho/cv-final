@@ -43,6 +43,7 @@
     width: 100%;
     height: 50%;
     margin-bottom: 100px;
+    margin-top: 20px;
 }
 .canvas_mirror {
   /* height: 100%; */
@@ -73,12 +74,18 @@
     margin-bottom: 20px;
 }
 #word-container {
-    display: inline;
+    /* display: inline; */
+    /* margin: auto; */
+    text-align: center;
     /* text-align: left; */
+}
+#center-wrapper {
+    margin: auto;
 }
 
 body {
     background-color: #f2bcd1;
+    margin: 0 auto;
 }
 
 </style>
@@ -93,9 +100,10 @@ body {
             Once the letter turns green, move on to the next letter! After you have signed all the letters correctly, you can choose a new word.
         </p>
         <button type="button" class="btn btn-primary btn-lg" id="new-word">New Word</button>
-        <div id="word-container">
+    </div>
+    <div id="word-container">
+        <div id="center-wrapper"></div>
             <!-- <h2 id=word></h2> -->
-        </div>
     </div>
 
     <div id="webcam-interaction">

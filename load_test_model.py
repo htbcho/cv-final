@@ -35,47 +35,44 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 
 prediction = ''
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
     return render_template('/index.html', title='Learn ASL!')
 
 img_dir = 'webcam_images/curr.jpg'
+global start
+start = 0
 
-@app.route('/model', methods = ['POST']) #what is a file path
+global url
+url = ''
+
+@app.route('/model', methods = ['POST', 'GET']) #what is a file path
 def predict():
-    url = request.form['url']
-    urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
-    # print("got image")
-    # print(os.listdir('webcam_images'))
-    # print(' - - - - - - - ')
-    img = image.load_img('webcam_images/curr.jpg', target_size=(64,64))
-    print(img)
-    img_array = image.img_to_array(img)
-    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+    ret = ''
+    if request.method == 'POST':
+        global url
+        url = request.form['url']
+        global start
+        start = 1
+    # global start
+    if start == 1:
+        urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
+        img = image.load_img('webcam_images/curr.jpg', target_size=(64,64))
+        # print(img)
+        img_array = image.img_to_array(img)
+        img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+        loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
+        # preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
+        result = loaded_model.predict(img_array_expanded_dims)
+        prediction = labels[np.argmax(result)]
+        ret = { 'label': prediction }
+        # os.remove(img_dir)
+        return jsonify(ret)
 
-    loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
-    # preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
-    result = loaded_model.predict(img_array_expanded_dims)
-    prediction = labels[np.argmax(result)]
-
-    ret = { 'label': prediction }
-
-    # print('after model')
-    # print(os.listdir('webcam_images'))
-    os.remove(img_dir)
-    # print(os.listdir('webcam_images'))
-    return jsonify(ret)
+# @app.route('/label')
+# def pushLabel():
 
 
-    # print(filename)
-    # print(np.shape(result))
-    # print(labels[np.argmax(result)])
-
-    # if request.method == 'POST':
-    #     result = prediction
-    #     resp = make_response('{"response": '+prediction+'}')
-    #     resp.headers['Content-Type'] = "application/json"
-    #     return jsonify(resp)
 
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = '*'

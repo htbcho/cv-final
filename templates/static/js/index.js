@@ -1,6 +1,7 @@
 $(document).ready(function(){
     const label = '';
-    const word_bank = ["CAT", "DOG", "YAY", "VISION", "FUN", "DAD", "EYE"];
+    // const word_bank = ["CAT", "DOG", "YAY", "VISION", "FUN", "DAD", "EYE"];
+    const word_bank = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK", "LL", "MM", "NN", "OO", "PP", "QQ", "RR", "SS", "TT", "UU", "VV", "WW", "XX", "YY", "ZZ"]
     // const word_bank = ["L"];
     let word;
     let all_letters;
@@ -10,8 +11,9 @@ $(document).ready(function(){
     // document.getElementById("new-word").addEventListener("onclick", newWord());
     var button = document.getElementById("new-word");
     button.onclick = function() {
-        var container = $("#word-container");
-        container.empty();
+        // var container = $("#word-container");
+        var wrapper = $("#center-wrapper");
+        wrapper.empty();
         var max = word_bank.length-1;
         var min = 0;
         var index = Math.floor(Math.random()*(max-min+1)+min);
@@ -21,20 +23,28 @@ $(document).ready(function(){
         // l.innerText = word;
         all_letters = [];
         // var container = document.getElementById("word-container");
-        var container = $("#word-container");
-        container.empty();
+        // var container = $("#word-container");
+        var wrapper = $("#center-wrapper");
+        wrapper.empty();
         curr_index = 0;
         for (var i=0; i<word.length; i++) {
-            console.log("loop");
+            var letter_container = document.createElement("div"); //for styling purposes
+            // letter_container.style.float = "left";
+            letter_container.style.margin = "0 auto";
+            letter_container.style.marginLeft = "15px";
+            letter_container.style.marginRight = "15px";
+            letter_container.style.display = "inline-block";
             var letter = document.createElement("p");
+            letter_container.appendChild(letter);
+            letter.id = i.toString();
             letter.innerText = word.charAt(i);
-            letter.style.fontSize = "30px";
+            letter.style.fontSize = "55px";
             letter.style.fontWeight = "bold";
             letter.style.fontFamily = "'Fredoka One', cursive";
-            container.append(letter);
+            wrapper.append(letter_container);
             all_letters.push(letter);
         }
-        console.log("after loop " + container.children());
+        // console.log("after loop " + container.children());
         
         // l.style.marginTop = "0px";
         // l.style.paddingBottom = "10px";
@@ -65,40 +75,46 @@ $(document).ready(function(){
         var image = document.getElementById("mirror");
         image.src = url;
 
-        getLabel(image);
+        pushImage(image);
 
 
         setTimeout(draw, 1/frameRate, video, canvas, context, frameRate);
         //maybe push img to model here?
     }
 
-    function getLabel(image) { //eventually pass in letter <some set up stuff: https://stackoverflow.com/questions/11071100/jquery-uncaught-typeerror-illegal-invocation-at-ajax-request-several-eleme>
+    function pushImage(image) { //eventually pass in letter <some set up stuff: https://stackoverflow.com/questions/11071100/jquery-uncaught-typeerror-illegal-invocation-at-ajax-request-several-eleme>
         $.post( "/model", {
             url: image.src,
             crossDomain: true,
             processData: false,
-            // success: function(data) {
-            //     console.log('what');
-            //     console.log(data);
-            //     // console.log(response);
-            //     // 
+            success: changeLetter()
             }, 
-            function(err, req, response){ 
-                console.log(response["responseJSON"]["label"]);
-                var label = response["responseJSON"]["label"]; 
-                changeLetter(label);
-            });
+            // function(err, req, response){ 
+            //     // getLabel();
+            //     // console.log("done POST");
+            //     // console.log(response["responseJSON"]["label"]);
+            //     // var label = response["responseJSON"]["label"]; 
+            //     // changeLetter();
+            // }
+            );
     }
 
-    function changeLetter(label) {
-        if (label === word.charAt(curr_index)) {
-            var ele = all_letters[curr_index];
-            ele.style.color = "#1fa851";
-            console.log(curr_index);
-            console.log(ele.style.color);
-            console.log("new letter " + ele.innerText);
-            curr_index++;
-        }
+    function changeLetter() {
+        $.get("/model", function(data, status){
+            var label = data.label;
+            console.log("predicted: " + label);
+            // console.log(word);
+            if (label === word.charAt(curr_index)) {
+                console.log("Correct!");
+                var ele = all_letters[curr_index];
+                ele.style.color = "#1fa851";
+                // console.log(curr_index);
+                // console.log(ele.style.color);
+                // console.log("new letter " + ele.innerText);
+                curr_index++;
+            }
+        });
+        
     }
 
 
