@@ -11,16 +11,19 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import VGG16
+from tensorflow.keras.applications.vgg16 import preprocess_input
+from keras.applications.vgg16 import decode_predictions
+
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
 test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 def preprocess_image(img):
-    print(img.shape)
-    img_array = image.img_to_array(img)
-    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-    return img_array_expanded_dims
+    img = image.img_to_array(img)
+    img = image.reshape((1, img.shape[0], img.shape[1], img.shape[2]))
+    img = preprocess_input(img)
+    return img
 
 # dimensions of our images.
 img_width, img_height = 224, 224
@@ -91,6 +94,8 @@ print("FINISHED TRAINING")
 for filename in os.listdir(test_dir):
     img = preprocess_input(filename)
     result = custom_model.predict(img)
+    label = decode_predictions(result)
+    print(label[0][0])
     print(filename)
     print(labels[np.argmax(result)])
 
