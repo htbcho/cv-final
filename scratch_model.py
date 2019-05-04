@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 from numpy import floor
 import random
 
-data_dir = "/home/ella_feldmann/asl_alphabet_train/"
+data_dir = "/home/ella_feldmann/cv-final/test/"
 target_size = (64, 64)
 target_dims = (64, 64, 3) # add channel for RGB
 n_classes = 29
@@ -43,7 +43,7 @@ my_model.add(Conv2D(256, kernel_size=4, strides=2, activation='relu'))
 my_model.add(Flatten())
 my_model.add(Dropout(0.5))
 my_model.add(Dense(512, activation='relu'))
-my_model.add(Dense(29, activation='softmax'))
+my_model.add(Dense(26, activation='softmax'))
 
 my_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=["accuracy"])
 
