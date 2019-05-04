@@ -30,6 +30,7 @@ for subdir in os.listdir(test_dir):
     for filename in os.listdir(test_dir + subdir):
 
         test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
+        test_image *= 255.0/test_image.max()  
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis = 0)
         # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
