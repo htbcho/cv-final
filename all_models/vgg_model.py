@@ -97,7 +97,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
 
-history = custom_model.fit_generator(generator=train_generator,
+history = model.fit_generator(generator=train_generator,
                     steps_per_epoch=train_step_size,
                     validation_data=valid_generator,
                     validation_steps=valid_step_size,
