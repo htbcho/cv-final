@@ -46,7 +46,7 @@ for layer in model.layers:
 for layer in model.layers[-2:]:
     layer.trainable=True
 
-model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
  # fit_model(model, batches, val_batches, 2)
 
