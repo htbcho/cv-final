@@ -35,7 +35,7 @@ vgg_model = VGG16(weights='imagenet',
                    input_tensor=input_tensor)
 
 flatten = Flatten()
-x = flatten(model.output)
+x = flatten(vgg_model.output)
 x = Dense(4096, activation='relu')(x)
 x = Dense(4096, activation='relu')(x)
 x = Dense(29, activation='softmax')(x)
