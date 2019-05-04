@@ -23,6 +23,7 @@ def load_images(directory):
     for idx, label in enumerate(uniq_labels):
         for file in os.listdir(directory + "/" + label):
             filepath = directory + "/" + label + "/" + file
+            print(filepath)
             image = cv2.resize(cv2.imread(filepath), (64, 64))
             images.append(image)
             labels.append(idx)
@@ -35,11 +36,11 @@ def load_images(directory):
 uniq_labels = sorted(os.listdir(train_dir))
 images, labels = load_images(directory = train_dir)
 
-print("made it to here")
 
 if uniq_labels == sorted(os.listdir(test_dir)):
     X_eval, y_eval = load_images(directory = test_dir)
 
+print("made it to here")
 
 X_train, X_test, y_train, y_test = train_test_split(images, labels, test_size = 0.1, stratify = labels)
 
