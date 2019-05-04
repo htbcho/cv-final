@@ -22,11 +22,12 @@ def load_images(directory):
     labels = []
     for idx, label in enumerate(uniq_labels):
         for file in os.listdir(directory + "/" + label):
-            filepath = directory + "/" + label + "/" + file
-            print(filepath)
-            image = cv2.resize(cv2.imread(filepath), (64, 64))
-            images.append(image)
-            labels.append(idx)
+            if (file != '.DS_Store'):
+                filepath = directory + label + "/" + file
+                print(filepath)
+                image = cv2.resize(cv2.imread(filepath), (64, 64))
+                images.append(image)
+                labels.append(idx)
     images = np.array(images)
     labels = np.array(labels)
     return(images, labels)
