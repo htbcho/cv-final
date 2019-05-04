@@ -52,7 +52,7 @@ for layer in custom_model.layers[:7]:
 model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
 
 
-train_datagen=ImageDataGenerator(rescale=1./255, validation_split=0.2)
+train_datagen=ImageDataGenerator(validation_split=0.1)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
@@ -87,10 +87,9 @@ for filename in os.listdir(test_dir):
     img = image.load_img(test_dir + filename)
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-    preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
     result = custom_model.predict(preprocessed_image)
     print(filename)
-    print(np.shape(result))
     print(labels[np.argmax(result)])
 
 output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
+print("SAVED AT " + output_path)
