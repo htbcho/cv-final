@@ -20,7 +20,7 @@ test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 def preprocess_image(img):
-    img = image.load_img(train_dir + "/" + img)
+    # img = image.load_img(train_dir + "/" + img)
     img = image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
@@ -58,8 +58,6 @@ for layer in custom_model.layers[:7]:
 #                      optimizer='rmsprop',
 #                      metrics=['accuracy'])
 
-custom_model.compile(optimizer='rmsprop', loss='categorical_crossentropy',metrics=['accuracy'])
-
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_image, validation_split=0.2)
 
@@ -78,6 +76,8 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  batch_size=20, # total number of training images should be divisible by batch size
                                                  class_mode='categorical',
                                                  shuffle=True)
+
+custom_model.compile(optimizer='rmsprop', loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_step_size=train_generator.n//train_generator.batch_size
 valid_step_size=valid_generator.n//valid_generator.batch_size
