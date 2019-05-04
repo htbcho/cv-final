@@ -1,12 +1,12 @@
+import tensorflow as tf
 import numpy as np
-from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Conv2D, Dense, Dropout, Flatten
-from keras.layers import Flatten, Dense
-from keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten
+from tensorflow.keras.layers import Flatten, Dense
+from tensorflow.keras.models import Sequential
 from sklearn.model_selection import train_test_split
 
 np.random.seed(5)
-import tensorflow as tf
 tf.set_random_seed(2)
 import matplotlib.pyplot as plt
 import os
