@@ -22,7 +22,7 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 
 def preprocess_image(img):
     img = image.img_to_array(img)
-    img = image.reshape((1, img.shape[0], img.shape[1], img.shape[2]))
+    img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
     return img
 
@@ -61,7 +61,7 @@ for layer in custom_model.layers[:7]:
 custom_model.compile(optimizer='rmsprop', loss='categorical_crossentropy',metrics=['accuracy'])
 
 
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_image, validation_split=0.2)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
