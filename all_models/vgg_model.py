@@ -34,19 +34,19 @@ vgg_model = VGG16(weights='imagenet',
                    include_top=False,
                    input_tensor=input_tensor)
 
- flatten = Flatten()
- x = flatten(model.output)
- x = Dense(4096, activation='relu')(x)
- x = Dense(4096, activation='relu')(x)
- x = Dense(29, activation='softmax')(x)
- model = Model(inputs=vgg_model.input, outputs=x)
+flatten = Flatten()
+x = flatten(model.output)
+x = Dense(4096, activation='relu')(x)
+x = Dense(4096, activation='relu')(x)
+x = Dense(29, activation='softmax')(x)
+model = Model(inputs=vgg_model.input, outputs=x)
 
- for layer in model.layers:
-  layer.trainable=False
- for layer in model.layers[-2:]:
-  layer.trainable=True
+for layer in model.layers:
+layer.trainable=False
+for layer in model.layers[-2:]:
+layer.trainable=True
 
- model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 
  # fit_model(model, batches, val_batches, 2)
 
