@@ -12,7 +12,7 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
-from keras.applications.vgg16 import decode_predictions
+from tensorflow.keras.applications.vgg16 import decode_predictions
 
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
