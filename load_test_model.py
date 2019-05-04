@@ -53,7 +53,7 @@ def predict():
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
 
-    loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556986629/')
+    loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/')
     # preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
     result = loaded_model.predict(img_array_expanded_dims)
     prediction = labels[np.argmax(result)]
