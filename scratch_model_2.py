@@ -8,7 +8,7 @@ import cv2
 import tensorflow.keras
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
-test_dir = "/home/ella_feldmann/asl_alphabet_test/"
+test_dir = "/home/ella_feldmann/asl-alphabet-test/"
 
 #Helper function to load images from given directories
 def load_images(directory):
