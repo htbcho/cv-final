@@ -39,7 +39,7 @@ x = Dense(256, activation='relu')(x)
 x = Dropout(0.5)(x)
 x = Dense(10, activation='softmax')(x)
 
-custom_model = models.Model(input=vgg_model.input, output=x)
+custom_model = models.Model(inputs=vgg_model.input, output=x)
 
 for layer in custom_model.layers[:7]:
     layer.trainable = False
