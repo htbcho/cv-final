@@ -42,7 +42,7 @@ for layer in model.layers[20:]:
 
 print("CONSTRUCTED MODEL")
 
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_image, validation_split=0.2)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
