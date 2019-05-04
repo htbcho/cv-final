@@ -5,6 +5,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten
 from tensorflow.keras.layers import Flatten, Dense
 from tensorflow.keras.models import Sequential
 from sklearn.model_selection import train_test_split
+from tensorflow.keras import utils
 
 np.random.seed(5)
 tf.set_random_seed(2)
@@ -24,7 +25,6 @@ def load_images(directory):
         for file in os.listdir(directory + "/" + label):
             if (file != '.DS_Store'):
                 filepath = directory + label + "/" + file
-                print(filepath)
                 image = cv2.resize(cv2.imread(filepath), (64, 64))
                 images.append(image)
                 labels.append(idx)
@@ -60,9 +60,9 @@ y_train_in = y_train.argsort()
 y_train = y_train[y_train_in]
 X_train = X_train[y_train_in]
 
-y_train = keras.utils.to_categorical(y_train)
-y_test = keras.utils.to_categorical(y_test)
-y_eval = keras.utils.to_categorical(y_eval)
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+y_eval = to_categorical(y_eval)
 
 X_train = X_train.astype('float32')/255.0
 X_test = X_test.astype('float32')/255.0
