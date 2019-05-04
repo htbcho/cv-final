@@ -1,4 +1,10 @@
 import numpy as np
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Conv2D, Dense, Dropout, Flatten
+from keras.layers import Flatten, Dense
+from keras.models import Sequential
+from sklearn.model_selection import train_test_split
+
 np.random.seed(5)
 import tensorflow as tf
 tf.set_random_seed(2)
@@ -29,10 +35,9 @@ def load_images(directory):
 uniq_labels = sorted(os.listdir(train_dir))
 images, labels = load_images(directory = train_dir)
 
-if uniq_labels == sorted(os.listdir(eval_dir)):
-    X_eval, y_eval = load_images(directory = eval_dir)
+if uniq_labels == sorted(os.listdir(test_dir)):
+    X_eval, y_eval = load_images(directory = test_dir)
 
-from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(images, labels, test_size = 0.1, stratify = labels)
 
@@ -58,11 +63,6 @@ y_eval = keras.utils.to_categorical(y_eval)
 X_train = X_train.astype('float32')/255.0
 X_test = X_test.astype('float32')/255.0
 X_eval = X_eval.astype('float32')/255.0
-
-from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Conv2D, Dense, Dropout, Flatten
-from keras.layers import Flatten, Dense
-from keras.models import Sequential
 
 model = Sequential()
 model.add(Conv2D(filters = 64, kernel_size = 5, padding = 'same', activation = 'relu',
