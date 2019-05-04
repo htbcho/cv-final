@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten
 from tensorflow.keras.layers import Flatten, Dense
 from tensorflow.keras.models import Sequential
 from sklearn.model_selection import train_test_split
-from tensorflow.keras import utils
+from tensorflow.keras.utils import to_categorical
 
 np.random.seed(5)
 tf.set_random_seed(2)
