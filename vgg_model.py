@@ -16,6 +16,11 @@ train_dir = "/home/ella_feldmann/asl_alphabet_train/"
 test_dir = "/home/ella_feldmann/asl_alphabet_test/"
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
+def preprocess_image(file):
+    img = image.load_img(train_dir + "/" + file)
+    img_array = image.img_to_array(img)
+    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+    return img_array_expanded_dims
 
 # dimensions of our images.
 img_width, img_height = 224, 224
@@ -29,10 +34,10 @@ vgg_model = VGG16(weights='imagenet',
 layer_dict = dict([(layer.name, layer) for layer in vgg_model.layers])
 
 # Getting output tensor of the last VGG layer that we want to include
-x = layer_dict['block2_pool'].output
-
+# x = layer_dict['block2_pool'].output
+x = vgg_model.output
 # Stacking a new simple convolutional network on top of it
-x = Conv2D(filters=64, kernel_size=(3, 3), activation='relu')(x)
+# x = Conv2D(filters=64, kernel_size=(3, 3), activation='relu')(x)
 x = MaxPooling2D(pool_size=(2, 2))(x)
 x = Flatten()(x)
 x = Dense(256, activation='relu')(x)
@@ -49,10 +54,10 @@ for layer in custom_model.layers[:7]:
 #                      optimizer='rmsprop',
 #                      metrics=['accuracy'])
 
-custom_model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
+custom_model.compile(optimizer='rmsprop', loss='categorical_crossentropy',metrics=['accuracy'])
 
 
-train_datagen=ImageDataGenerator(validation_split=0.1)
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
@@ -84,10 +89,8 @@ history = custom_model.fit_generator(generator=train_generator,
 print("FINISHED TRAINING")
 
 for filename in os.listdir(test_dir):
-    img = image.load_img(test_dir + filename)
-    img_array = image.img_to_array(img)
-    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-    result = custom_model.predict(preprocessed_image)
+    img = preprocess_input(filename)
+    result = custom_model.predict(img)
     print(filename)
     print(labels[np.argmax(result)])
 
