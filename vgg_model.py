@@ -9,7 +9,7 @@ from tensorflow.keras import models
 from tensorflow.keras import applications
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.preprocessing import reshape
+from tensorflow.keras.preprocessing.image import reshape
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
@@ -61,7 +61,7 @@ for layer in custom_model.layers[:7]:
 custom_model.compile(optimizer='rmsprop', loss='categorical_crossentropy',metrics=['accuracy'])
 
 
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_image, validation_split=0.2)
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
