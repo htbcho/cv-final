@@ -52,7 +52,8 @@ custom_model=Model(inputs=vgg_model.input,outputs=x)
 
 for layer in custom_model.layers[:7]:
     layer.trainable = False
-
+for layer in custom_model.layers[7:]:
+    layer.trainable = True
 
 # custom_model.compile(loss='categorical_crossentropy',
 #                      optimizer='rmsprop',
