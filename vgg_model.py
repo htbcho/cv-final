@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Activation, Dense, GlobalAveragePooling2D
+from tensorflow.keras.layers import Activation, Dense, GlobalAveragePooling2D, Input
 from tensorflow.keras import optimizers
 from tensorflow.keras import models
 from tensorflow.keras import applications
