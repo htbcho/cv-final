@@ -17,7 +17,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 test_dir = "/home/ella_feldmann/cv-final/test/"
-labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
+labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] #, "del", "nothing", "space"]
 
 true_labels = []
 pred_labels = []
@@ -31,8 +31,6 @@ for subdir in os.listdir(test_dir):
 
         test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
         test_image = image.img_to_array(test_image)
-        # test_image *= 255.0/test_image.max()
-
         test_image = np.expand_dims(test_image, axis = 0)
         # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
 
@@ -62,13 +60,15 @@ norm_confusion = confusion.astype('float') / confusion.sum(axis=1)[:,np.newaxis]
 plt.imshow(norm_confusion, interpolation = 'nearest', cmap = plt.cm.Greens)
 plt.xlabel('Predicted Label', fontsize = 16)
 plt.ylabel('True Label', fontsize = 16)
-plt.xticks( np.arange(29), labels)
-plt.yticks( np.arange(29), labels)
+plt.xticks( np.arange(26), labels)
+plt.yticks( np.arange(26), labels)
 plt.colorbar()
 plt.title('Confusion Matrix with Normalization')
 thresh = norm_confusion.max() / 2.
 
 plt.savefig('norm_confusion_matrix.png')
 
+print(true_labels[0:10])
+print(pred_labels[0:10])
 acc = accuracy_score(true_labels, pred_labels)
 print(acc)

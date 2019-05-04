@@ -50,4 +50,3 @@ my_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=["ac
 my_model.fit_generator(train_generator, epochs=7, validation_data=val_generator)
 
 output_path = tf.contrib.saved_model.save_keras_model(my_model, './scratch_tmp_dir')
-print("output path is: " + output_path)
