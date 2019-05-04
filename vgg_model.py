@@ -45,9 +45,11 @@ for layer in custom_model.layers[:7]:
     layer.trainable = False
 
 
-custom_model.compile(loss='categorical_crossentropy',
-                     optimizer='rmsprop',
-                     metrics=['accuracy'])
+# custom_model.compile(loss='categorical_crossentropy',
+#                      optimizer='rmsprop',
+#                      metrics=['accuracy'])
+
+model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
 
 
 train_datagen=ImageDataGenerator(rescale=1./255, validation_split=0.2)
