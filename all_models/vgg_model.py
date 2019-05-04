@@ -42,9 +42,9 @@ x = Dense(29, activation='softmax')(x)
 model = Model(inputs=vgg_model.input, outputs=x)
 
 for layer in model.layers:
-layer.trainable=False
+    layer.trainable=False
 for layer in model.layers[-2:]:
-layer.trainable=True
+    layer.trainable=True
 
 model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 
