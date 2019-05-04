@@ -66,5 +66,60 @@ history = model.fit_generator(generator=train_generator,
                     epochs=5
 )
 
+output_path = tf.contrib.saved_model.save_keras_model(model, './inc_tmp_dir')
 
-print("FINISHED TRAINING")
+# loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556986629/') # SCRATCH MODEL ONLY !!!
+
+true_labels = []
+pred_labels = []
+
+
+for subdir in os.listdir(test_dir):
+    for filename in os.listdir(test_dir + subdir):
+
+        test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
+        test_image = image.img_to_array(test_image)
+        test_image = np.expand_dims(test_image, axis = 0)
+        test_image = preprocess_input(test_image)
+
+        result = model.predict(test_image)
+        true_labels.append(subdir) # True labels
+        pred_labels.append(labels[np.argmax(result)]) # Model predictions
+
+
+confusion = confusion_matrix(true_labels, pred_labels, labels)
+print(confusion)
+
+plt.figure(0, figsize =(7,7))
+plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
+plt.title('Confusion Matrix without Normalization')
+plt.xlabel('Predicted Label', fontsize = 16)
+plt.ylabel('True Label', fontsize = 16)
+plt.xticks(np.arange(29), labels)
+plt.yticks(np.arange(29), labels)
+plt.colorbar()
+thresh = confusion.max() / 2.
+plt.savefig('confusion_matrix.png')
+
+
+
+plt.figure(1, figsize =(7,7))
+norm_confusion = confusion.astype('float') / confusion.sum(axis=1)[:,np.newaxis]
+plt.imshow(norm_confusion, interpolation = 'nearest', cmap = plt.cm.Greens)
+plt.xlabel('Predicted Label', fontsize = 16)
+plt.ylabel('True Label', fontsize = 16)
+plt.xticks( np.arange(29), labels)
+plt.yticks( np.arange(29), labels)
+plt.colorbar()
+plt.title('Confusion Matrix with Normalization')
+thresh = norm_confusion.max() / 2.
+
+plt.savefig('norm_confusion_matrix.png')
+
+print(true_labels[0:100])
+print(pred_labels[0:100])
+acc = accuracy_score(true_labels, pred_labels)
+print(acc)
+#
+# output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
+# print("SAVED AT " + output_path)
