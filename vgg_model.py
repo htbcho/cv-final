@@ -10,7 +10,7 @@ from tensorflow.keras import applications
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
-from keras.applications import VGG16
+from tensorflow.keras.applications import VGG16
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
 test_dir = "/home/ella_feldmann/asl_alphabet_test/"
