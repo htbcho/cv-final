@@ -50,7 +50,7 @@ custom_model.compile(loss='categorical_crossentropy',
                      metrics=['accuracy'])
 
 
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
+train_datagen=ImageDataGenerator(rescale=1./255, validation_split=0.2)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
