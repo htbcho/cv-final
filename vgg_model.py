@@ -49,7 +49,7 @@ for layer in custom_model.layers[:7]:
 #                      optimizer='rmsprop',
 #                      metrics=['accuracy'])
 
-model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
+custom_model.compile(optimizer=tf.train.AdagradOptimizer(0.001), loss='categorical_crossentropy',metrics=['accuracy'])
 
 
 train_datagen=ImageDataGenerator(validation_split=0.1)
