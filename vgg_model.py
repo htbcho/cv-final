@@ -37,9 +37,9 @@ x = MaxPooling2D(pool_size=(2, 2))(x)
 x = Flatten()(x)
 x = Dense(256, activation='relu')(x)
 x = Dropout(0.5)(x)
-x = Dense(10, activation='softmax')(x)
+x = Dense(29, activation='softmax')(x)
 
-custom_model = models.Model(inputs=vgg_model.input, output=x)
+custom_model=Model(inputs=vgg_model.input,outputs=x)
 
 for layer in custom_model.layers[:7]:
     layer.trainable = False
