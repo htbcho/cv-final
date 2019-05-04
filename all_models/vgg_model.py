@@ -35,12 +35,13 @@ x = Dense(4096, activation='relu')(x)
 x = Dense(29, activation='softmax')(x)
 model = Model(inputs=vgg_model.input, outputs=x)
 
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
 for layer in model.layers:
     layer.trainable=False
 for layer in model.layers[-2:]:
     layer.trainable=True
-
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
  # fit_model(model, batches, val_batches, 2)
 
