@@ -22,7 +22,7 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 true_labels = []
 pred_labels = []
 
-loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/') # SCRATCH MODEL ONLY !!!
+loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556986629/') # SCRATCH MODEL ONLY !!!
 # loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556737843/') # MOBILENET ONLY !!!!
 
 for subdir in os.listdir(test_dir):
