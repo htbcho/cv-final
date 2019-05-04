@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 from numpy import floor
 import random
 
-data_dir = "/home/ella_feldmann/test/"
+data_dir = "/home/ella_feldmann/cv-final/test/"
 target_size = (64, 64)
 target_dims = (64, 64, 3) # add channel for RGB
 n_classes = 29
