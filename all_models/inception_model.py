@@ -11,7 +11,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 
-from keras.applications.inception_v3 import preprocess_input
+from tensorflow.keras.applications.inception_v3 import preprocess_input
 
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
@@ -25,7 +25,6 @@ base_model = InceptionV3(weights='imagenet', include_top=False)
 x = base_model.output
 x = GlobalAveragePooling2D(name='avg_pool')(x)
 x = Dropout(0.4)(x)
-
 predictions = Dense(29, activation='softmax')(x)
 model = Model(inputs=base_model.input, outputs=predictions)
 
