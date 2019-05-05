@@ -60,6 +60,7 @@ def predict():
         img = image.load_img('webcam_images/curr.jpg', target_size=(64,64))
         # print(img)
         img_array = image.img_to_array(img)
+
         img_array_expanded_dims = np.expand_dims(img_array, axis=0)
         loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/') # THE WORKING MODEL
         # loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1557093069/')
