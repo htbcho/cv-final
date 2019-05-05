@@ -26,14 +26,15 @@ labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", 
 
 # COMPILE THE DENSE LAYER MODEL
 vgg_model = VGG16(weights='imagenet',
-                   include_top=False)
+                   include_top=False,
+                   input_shape=(224, 224, 3))
 
 
 model = models.Sequential()
 model.add(vgg_model)
 model.add(layers.Flatten())
-model.add(layers.Dense((-1, 256), activation='relu'))
-model.add(layers.Dense((-1, 9), activation='softmax'))
+model.add(layers.Dense(256, activation='relu')
+model.add(layers.Dense(29, activation='softmax'))
 
 model.summary()
 print('This is the number of trainable weights '
