@@ -52,33 +52,29 @@ model.compile(optimizer=optimizers.RMSprop(lr=2e-5),
 
 train_datagen = ImageDataGenerator(
       rescale=1./255,
-      rotation_range=40,
-      width_shift_range=0.2,
-      height_shift_range=0.2,
-      shear_range=0.2,
+      width_shift_range=0.1,
+      height_shift_range=0.1,
       zoom_range=0.2,
-      horizontal_flip=True,
       fill_mode='nearest')
 
 # Note that the validation data should not be augmented!
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-        # This is the target directory
         train_dir,
-        # All images will be resized to 150x150
-        target_size=(150, 150),
+        subset = 'training',
+        target_size=(224, 224),
         batch_size=20,
-        # Since we use binary_crossentropy loss, we need binary labels
-        class_mode='binary')
+        class_mode='categorical')
 
 validation_generator = test_datagen.flow_from_directory(
-        validation_dir,
-        target_size=(150, 150),
+        train_dir,
+        subset = 'validation',
+        target_size=(224, 224),
         batch_size=20,
-        class_mode='binary')
+        class_mode='categorical')
 
-model.compile(loss='binary_crossentropy',
+model.compile(loss='categorical_crossentropy',
               optimizer=optimizers.RMSprop(lr=2e-5),
               metrics=['acc'])
 
