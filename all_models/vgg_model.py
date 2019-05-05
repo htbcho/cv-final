@@ -33,7 +33,7 @@ vgg_model = VGG16(weights='imagenet',
 model = models.Sequential()
 model.add(vgg_model)
 model.add(layers.Flatten())
-model.add(layers.Dense(256, activation='relu')
+model.add(layers.Dense(256, activation='relu'))
 model.add(layers.Dense(29, activation='softmax'))
 
 model.summary()
