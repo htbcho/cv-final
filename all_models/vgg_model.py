@@ -18,11 +18,9 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
-# test_dir = "/home/ella_feldmann/asl-alphabet-test/"
+test_dir = "/home/ella_feldmann/asl-alphabet-test/"
+
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
-
-# GATHER ALL THE TRAINING, TESTING, AND VALIDATION DATA
-
 
 # COMPILE THE DENSE LAYER MODEL
 vgg_model = VGG16(weights='imagenet',
@@ -67,7 +65,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
 
 model.compile(loss='categorical_crossentropy',
               optimizer=optimizers.RMSprop(lr=2e-5),
-              metrics=['acc'])
+              metrics=["accuracy"])
 
 history = model.fit_generator(
       train_generator,
@@ -78,56 +76,60 @@ history = model.fit_generator(
       verbose=2)
 
 
+model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
+del model  # deletes the existing model
 
 
 
-# # for subdir in os.listdir(test_dir):
-# #
-# #     for filename in os.listdir(test_dir + subdir):
-# #
-# #         test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
-# #         test_image = image.img_to_array(test_image)
-# #         test_image = np.expand_dims(test_image, axis = 0)
-# #         # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-# #
-# #         result = loaded_model.predict(test_image)
-# #         true_labels.append(subdir) # True labels
-# #         pred_labels.append(labels[np.argmax(result)]) # Model predictions
-# #
-# #
-# # confusion = confusion_matrix(true_labels, pred_labels, labels)
-# # print(confusion)
-# #
-# # plt.figure(0, figsize =(7,7))
-# # plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
-# # plt.title('Confusion Matrix without Normalization')
-# # plt.xlabel('Predicted Label', fontsize = 16)
-# # plt.ylabel('True Label', fontsize = 16)
-# # plt.xticks(np.arange(29), labels)
-# # plt.yticks(np.arange(29), labels)
-# # plt.colorbar()
-# # thresh = confusion.max() / 2.
-# # plt.savefig('confusion_matrix.png')
-# #
-# #
-# #
-# # plt.figure(1, figsize =(7,7))
-# # norm_confusion = confusion.astype('float') / confusion.sum(axis=1)[:,np.newaxis]
-# # plt.imshow(norm_confusion, interpolation = 'nearest', cmap = plt.cm.Greens)
-# # plt.xlabel('Predicted Label', fontsize = 16)
-# # plt.ylabel('True Label', fontsize = 16)
-# # plt.xticks( np.arange(29), labels)
-# # plt.yticks( np.arange(29), labels)
-# # plt.colorbar()
-# # plt.title('Confusion Matrix with Normalization')
-# # thresh = norm_confusion.max() / 2.
-# #
-# # plt.savefig('norm_confusion_matrix.png')
-# #
-# # print(true_labels[0:100])
-# # print(pred_labels[0:100])
-# # acc = accuracy_score(true_labels, pred_labels)
-# # print(acc)
-# # #
-# # # output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
-# # # print("SAVED AT " + output_path)
+# LOAD IN THE TRAINED MODEL ####################################################
+loaded_model = load_model('my_model.h5')
+
+for subdir in os.listdir(test_dir):
+    for filename in os.listdir(test_dir + subdir):
+
+        test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
+        test_image = image.img_to_array(test_image)
+        test_image = np.expand_dims(test_image, axis = 0)
+        # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
+
+        result = loaded_model.predict(test_image)
+        true_labels.append(subdir) # True labels
+        pred_labels.append(labels[np.argmax(result)]) # Model predictions
+
+
+confusion = confusion_matrix(true_labels, pred_labels, labels)
+print(confusion)
+
+plt.figure(0, figsize =(7,7))
+plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
+plt.title('Confusion Matrix without Normalization')
+plt.xlabel('Predicted Label', fontsize = 16)
+plt.ylabel('True Label', fontsize = 16)
+plt.xticks(np.arange(29), labels)
+plt.yticks(np.arange(29), labels)
+plt.colorbar()
+thresh = confusion.max() / 2.
+plt.savefig('confusion_matrix.png')
+
+
+
+plt.figure(1, figsize =(7,7))
+norm_confusion = confusion.astype('float') / confusion.sum(axis=1)[:,np.newaxis]
+plt.imshow(norm_confusion, interpolation = 'nearest', cmap = plt.cm.Greens)
+plt.xlabel('Predicted Label', fontsize = 16)
+plt.ylabel('True Label', fontsize = 16)
+plt.xticks( np.arange(29), labels)
+plt.yticks( np.arange(29), labels)
+plt.colorbar()
+plt.title('Confusion Matrix with Normalization')
+thresh = norm_confusion.max() / 2.
+
+plt.savefig('norm_confusion_matrix.png')
+
+print(true_labels[0:100])
+print(pred_labels[0:100])
+acc = accuracy_score(true_labels, pred_labels)
+print(acc)
+#
+# output_path = tf.contrib.saved_model.save_keras_model(model, './tmp_dir')
+# print("SAVED AT " + output_path)
