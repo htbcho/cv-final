@@ -82,7 +82,7 @@ del model  # deletes the existing model
 
 
 # LOAD IN THE TRAINED MODEL ####################################################
-loaded_model = load_model('my_model.h5')
+loaded_model = load_model('vgg_model.h5')
 
 for subdir in os.listdir(test_dir):
     for filename in os.listdir(test_dir + subdir):
