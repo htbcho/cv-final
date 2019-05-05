@@ -17,7 +17,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 test_dir = "/home/ella_feldmann/asl-alphabet-test/"
-labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] #, "del", "nothing", "space"]
+labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 true_labels = []
 pred_labels = []
