@@ -13,7 +13,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.applications.vgg16 import decode_predictions
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 
@@ -47,7 +47,6 @@ print('This is the number of trainable weights '
 model.compile(optimizer=optimizers.RMSprop(lr=2e-5),
               loss='categorical_crossentropy',
               metrics=['acc'])
-
 
 
 train_datagen = ImageDataGenerator(
