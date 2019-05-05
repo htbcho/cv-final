@@ -28,15 +28,15 @@ loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/155698
 for subdir in os.listdir(test_dir):
 
     for filename in os.listdir(test_dir + subdir):
+        if (filename != ".DS_Store"):
+            test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
+            test_image = image.img_to_array(test_image)
+            test_image = np.expand_dims(test_image, axis = 0)
+            # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
 
-        test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
-        test_image = image.img_to_array(test_image)
-        test_image = np.expand_dims(test_image, axis = 0)
-        # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-
-        result = loaded_model.predict(test_image)
-        true_labels.append(subdir) # True labels
-        pred_labels.append(labels[np.argmax(result)]) # Model predictions
+            result = loaded_model.predict(test_image)
+            true_labels.append(subdir) # True labels
+            pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
 
 confusion = confusion_matrix(true_labels, pred_labels, labels)
