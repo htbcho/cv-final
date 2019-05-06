@@ -31,6 +31,7 @@ vgg_model = VGG16(weights='imagenet',
 model = models.Sequential()
 model.add(vgg_model)
 model.add(layers.Flatten())
+model.add(Dropout(0.5))
 model.add(layers.Dense(256, activation='relu'))
 model.add(layers.Dense(29, activation='softmax'))
 
@@ -45,7 +46,7 @@ print('This is the number of trainable weights '
 
 
 
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2)
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2, rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                  subset = 'training',
@@ -80,7 +81,6 @@ model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
 del model  # deletes the existing model
 
 
-
 # LOAD IN THE TRAINED MODEL ####################################################
 loaded_model = load_model('vgg_model.h5')
 
@@ -89,7 +89,9 @@ for subdir in os.listdir(test_dir):
 
         test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
         test_image = image.img_to_array(test_image)
+        test_image = np.divide(test_image, 255.0)
         test_image = np.expand_dims(test_image, axis = 0)
+
         # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
 
         result = loaded_model.predict(test_image)
