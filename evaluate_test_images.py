@@ -31,13 +31,14 @@ loaded_model = load_model('vgg_model.h5')
 for subdir in os.listdir(test_dir):
 
     for filename in os.listdir(test_dir + subdir):
+        filename = "/home/ella_feldmann/curr.jpg"
         if (filename != ".DS_Store"):
             test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
             test_image = image.img_to_array(test_image)
             test_image = np.divide(test_image, 255.0)
             test_image = np.expand_dims(test_image, axis = 0)
             # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-            print(test_image)
+            print(labels[np.argmax(result)])
             print(test_image.shape)
             result = loaded_model.predict(test_image)
             true_labels.append(subdir) # True labels

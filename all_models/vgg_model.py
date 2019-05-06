@@ -14,10 +14,12 @@ from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.applications.vgg16 import decode_predictions
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.utils.vis_utils import plot_model
 
 
 
 train_dir = "/home/ella_feldmann/asl_alphabet_train/"
+train_dir_2 = "/home/ella_feldmann/cv-final/test/"
 test_dir = "/home/ella_feldmann/asl-alphabet-test/"
 
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
@@ -76,6 +78,40 @@ history = model.fit_generator(
       validation_data=valid_generator,
       validation_steps=50,
       verbose=2)
+
+###############################################################################
+
+train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2, rescale=1./255)
+
+train_generator = train_datagen.flow_from_directory(train_dir_2,
+                                                 subset = 'training',
+                                                 target_size=(224,224),
+                                                 color_mode='rgb',
+                                                 batch_size=20, # total number of training images should be divisible by batch size
+                                                 class_mode='categorical',
+                                                 shuffle=True)
+
+valid_generator = train_datagen.flow_from_directory(train_dir_2,
+                                                 subset = 'validation',
+                                                 target_size=(224,224),
+                                                 color_mode='rgb',
+                                                 batch_size=20, # total number of training images should be divisible by batch size
+                                                 class_mode='categorical',
+                                                 shuffle=True)
+
+model.compile(loss='categorical_crossentropy',
+              optimizer=optimizers.RMSprop(lr=2e-5),
+              metrics=["accuracy"])
+
+history = model.fit_generator(
+      train_generator,
+      steps_per_epoch=100,
+      epochs=2,
+      validation_data=valid_generator,
+      validation_steps=50,
+      verbose=2)
+
+###############################################################################
 
 
 model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
