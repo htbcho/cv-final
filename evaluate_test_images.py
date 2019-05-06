@@ -39,9 +39,10 @@ for subdir in os.listdir(test_dir):
             test_image = np.divide(test_image, 255.0)
             test_image = np.expand_dims(test_image, axis = 0)
             # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-            print(labels[np.argmax(result)])
             print(test_image.shape)
             result = loaded_model.predict(test_image)
+            print(labels[np.argmax(result)])
+
             true_labels.append(subdir) # True labels
             pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
