@@ -26,7 +26,7 @@ pred_labels = []
 
 # loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1557093069/') # SCRATCH MODEL ONLY !!!
 # loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556737843/') # MOBILENET ONLY !!!!
-loaded_model = load_model('vgg_model.h5')
+loaded_model = load_model('/home/ella_feldmann/vgg_model.h5')
 
 for subdir in os.listdir(test_dir):
 
