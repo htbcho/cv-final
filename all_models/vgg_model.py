@@ -71,7 +71,7 @@ model.compile(loss='categorical_crossentropy',
 history = model.fit_generator(
       train_generator,
       steps_per_epoch=100,
-      epochs=20,
+      epochs=22,
       validation_data=valid_generator,
       validation_steps=50,
       verbose=2)
@@ -81,6 +81,8 @@ model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
 del model  # deletes the existing model
 
 
+true_labels = []
+pred_labels = []
 # LOAD IN THE TRAINED MODEL ####################################################
 loaded_model = load_model('vgg_model.h5')
 
