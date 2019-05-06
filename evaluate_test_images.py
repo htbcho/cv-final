@@ -16,27 +16,32 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 
-test_dir = "/home/ella_feldmann/cv-final/test/"
-labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] #, "del", "nothing", "space"]
+# test_dir = "/home/ella_feldmann/cv-final/test/"
+test_dir = "/home/ella_feldmann/asl-alphabet-test/"
+
+labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
 true_labels = []
 pred_labels = []
 
-loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556986629/') # SCRATCH MODEL ONLY !!!
+# loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1557093069/') # SCRATCH MODEL ONLY !!!
 # loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556737843/') # MOBILENET ONLY !!!!
+loaded_model = load_model('/home/ella_feldmann/vgg_model.h5')
 
 for subdir in os.listdir(test_dir):
 
     for filename in os.listdir(test_dir + subdir):
-
-        test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (64, 64))
-        test_image = image.img_to_array(test_image)
-        test_image = np.expand_dims(test_image, axis = 0)
-        # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-
-        result = loaded_model.predict(test_image)
-        true_labels.append(subdir) # True labels
-        pred_labels.append(labels[np.argmax(result)]) # Model predictions
+        if (filename != ".DS_Store"):
+            test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
+            test_image = image.img_to_array(test_image)
+            test_image = np.divide(test_image, 255.0)
+            test_image = np.expand_dims(test_image, axis = 0)
+            # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
+            print(test_image)
+            print(test_image.shape)
+            result = loaded_model.predict(test_image)
+            true_labels.append(subdir) # True labels
+            pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
 
 confusion = confusion_matrix(true_labels, pred_labels, labels)

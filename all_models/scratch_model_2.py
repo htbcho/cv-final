@@ -93,3 +93,5 @@ score = model.evaluate(x = X_test, y = y_test, verbose = 0)
 print('Accuracy for test images:', round(score[1]*100, 3), '%')
 score = model.evaluate(x = X_eval, y = y_eval, verbose = 0)
 print('Accuracy for evaluation images:', round(score[1]*100, 3), '%')
+
+output_path = tf.contrib.saved_model.save_keras_model(model, './scratch_tmp_dir')
