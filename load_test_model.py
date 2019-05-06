@@ -74,9 +74,6 @@ def predict():
         # os.remove(img_dir)
         return jsonify(ret)
 
-# @app.route('/label')
-# def pushLabel():
-
 
 
 def add_cors_headers(response):

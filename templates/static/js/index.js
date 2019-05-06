@@ -2,7 +2,7 @@ $(document).ready(function(){
     const label = '';
     // const word_bank = ["CAT", "DOG", "YAY", "VISION", "FUN", "DAD", "EYE"];
     // const word_bank = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK", "LL", "MM", "NN", "OO", "PP", "QQ", "RR", "SS", "TT", "UU", "VV", "WW", "XX", "YY", "ZZ"]
-    // const word_bank = ["L"];
+    const word_bank = ["HOW"];
     let word;
     let all_letters;
     // let curr_letter;
@@ -18,18 +18,12 @@ $(document).ready(function(){
         var min = 0;
         var index = Math.floor(Math.random()*(max-min+1)+min);
         word = word_bank[index];
-
-        // var l = document.getElementById("word");
-        // l.innerText = word;
         all_letters = [];
-        // var container = document.getElementById("word-container");
-        // var container = $("#word-container");
         var wrapper = $("#center-wrapper");
         wrapper.empty();
         curr_index = 0;
         for (var i=0; i<word.length; i++) {
             var letter_container = document.createElement("div"); //for styling purposes
-            // letter_container.style.float = "left";
             letter_container.style.margin = "0 auto";
             letter_container.style.marginLeft = "15px";
             letter_container.style.marginRight = "15px";
@@ -44,10 +38,7 @@ $(document).ready(function(){
             wrapper.append(letter_container);
             all_letters.push(letter);
         }
-        // console.log("after loop " + container.children());
         
-        // l.style.marginTop = "0px";
-        // l.style.paddingBottom = "10px";
         curr_index = 0;
         // curr_letter = word.charAt(0);
         // l.textContent.charAt(0).fontcolor = "#42a4f4";
@@ -103,14 +94,10 @@ $(document).ready(function(){
         $.get("/model", function(data, status){
             var label = data.label;
             console.log("predicted: " + label);
-            // console.log(word);
             if (label === word.charAt(curr_index)) {
                 console.log("Correct!");
                 var ele = all_letters[curr_index];
                 ele.style.color = "#1fa851";
-                // console.log(curr_index);
-                // console.log(ele.style.color);
-                // console.log("new letter " + ele.innerText);
                 curr_index++;
             }
         });
