@@ -16,8 +16,8 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 
-# test_dir = "/home/ella_feldmann/cv-final/test/"
-test_dir = "/home/ella_feldmann/asl-alphabet-test/"
+test_dir = "/home/ella_feldmann/cv-final/test/"
+# test_dir = "/home/ella_feldmann/asl-alphabet-test/"
 
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "del", "nothing", "space"]
 
@@ -32,14 +32,17 @@ for subdir in os.listdir(test_dir):
 
     for filename in os.listdir(test_dir + subdir):
         if (filename != ".DS_Store"):
-            test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
+            # test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
+            test_image = image.load_img("/home/ella_feldmann/curr.jpg", target_size = (224, 224))
+
             test_image = image.img_to_array(test_image)
             test_image = np.divide(test_image, 255.0)
             test_image = np.expand_dims(test_image, axis = 0)
             # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-            print(test_image)
             print(test_image.shape)
             result = loaded_model.predict(test_image)
+            print(labels[np.argmax(result)])
+
             true_labels.append(subdir) # True labels
             pred_labels.append(labels[np.argmax(result)]) # Model predictions
 
