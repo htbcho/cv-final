@@ -73,6 +73,8 @@ history = model.fit_generator(
       validation_steps=50,
       verbose=2)
 
+plt.figure(0, figsize =(7,7))
+
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
 plt.title('Model accuracy')
@@ -110,7 +112,7 @@ for subdir in os.listdir(test_dir):
 confusion = confusion_matrix(true_labels, pred_labels, labels)
 print(confusion)
 
-plt.figure(0, figsize =(7,7))
+plt.figure(1, figsize =(7,7))
 plt.imshow(confusion, interpolation = 'nearest', cmap = plt.cm.Blues)
 plt.title('Confusion Matrix without Normalization')
 plt.xlabel('Predicted Label', fontsize = 16)
@@ -123,7 +125,7 @@ plt.savefig('confusion_matrix.png')
 
 
 
-plt.figure(1, figsize =(7,7))
+plt.figure(2, figsize =(7,7))
 norm_confusion = confusion.astype('float') / confusion.sum(axis=1)[:,np.newaxis]
 plt.imshow(norm_confusion, interpolation = 'nearest', cmap = plt.cm.Greens)
 plt.xlabel('Predicted Label', fontsize = 16)
