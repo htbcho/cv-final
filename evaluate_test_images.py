@@ -32,8 +32,8 @@ for subdir in os.listdir(test_dir):
 
     for filename in os.listdir(test_dir + subdir):
         if (filename != ".DS_Store"):
-            # test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
-            test_image = image.load_img("/home/ella_feldmann/curr.jpg", target_size = (224, 224))
+            test_image = image.load_img(test_dir + subdir + '/' + filename, target_size = (224, 224))
+            # test_image = image.load_img("/home/ella_feldmann/curr.jpg", target_size = (224, 224))
 
             test_image = image.img_to_array(test_image)
             test_image = np.divide(test_image, 255.0)

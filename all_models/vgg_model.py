@@ -39,7 +39,8 @@ model.add(Dropout(0.5))
 model.add(layers.Dense(29, activation='softmax'))
 
 model.summary()
-print('This is the number of trainable weights '
+print('This is the number of trainable
+ weights '
       'before freezing the conv base:', len(model.trainable_weights))
 
 vgg_model.trainable = False
@@ -68,7 +69,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  shuffle=True)
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=optimizers.RMSprop(lr=2e-5),
+              optimizer=tf.train.AdagradOptimizer(0.001),
               metrics=["accuracy"])
 
 history = model.fit_generator(
@@ -79,49 +80,13 @@ history = model.fit_generator(
       validation_steps=50,
       verbose=2)
 
-###############################################################################
-
-train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2, rescale=1./255)
-
-train_generator = train_datagen.flow_from_directory(train_dir_2,
-                                                 subset = 'training',
-                                                 target_size=(224,224),
-                                                 color_mode='rgb',
-                                                 batch_size=20, # total number of training images should be divisible by batch size
-                                                 class_mode='categorical',
-                                                 shuffle=True)
-
-valid_generator = train_datagen.flow_from_directory(train_dir_2,
-                                                 subset = 'validation',
-                                                 target_size=(224,224),
-                                                 color_mode='rgb',
-                                                 batch_size=20, # total number of training images should be divisible by batch size
-                                                 class_mode='categorical',
-                                                 shuffle=True)
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=optimizers.RMSprop(lr=2e-5),
-              metrics=["accuracy"])
-
-history = model.fit_generator(
-      train_generator,
-      steps_per_epoch=100,
-      epochs=2,
-      validation_data=valid_generator,
-      validation_steps=50,
-      verbose=2)
-
-###############################################################################
 
 
 model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
 del model  # deletes the existing model
-
-
+loaded_model = load_model('vgg_model.h5')
 true_labels = []
 pred_labels = []
-# LOAD IN THE TRAINED MODEL ####################################################
-loaded_model = load_model('vgg_model.h5')
 
 for subdir in os.listdir(test_dir):
     for filename in os.listdir(test_dir + subdir):
@@ -130,9 +95,6 @@ for subdir in os.listdir(test_dir):
         test_image = image.img_to_array(test_image)
         test_image = np.divide(test_image, 255.0)
         test_image = np.expand_dims(test_image, axis = 0)
-
-        # test_image = applications.mobilenet.preprocess_input(test_image) # MOBILENET ONLY !!!!!
-
         result = loaded_model.predict(test_image)
         true_labels.append(subdir) # True labels
         pred_labels.append(labels[np.argmax(result)]) # Model predictions
