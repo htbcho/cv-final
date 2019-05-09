@@ -14,7 +14,6 @@ from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.applications.vgg16 import decode_predictions
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.utils.vis_utils import plot_model
 
 
 
