@@ -39,16 +39,7 @@ model.add(Dropout(0.5))
 model.add(layers.Dense(29, activation='softmax'))
 
 model.summary()
-print('This is the number of trainable
- weights '
-      'before freezing the conv base:', len(model.trainable_weights))
-
 vgg_model.trainable = False
-
-print('This is the number of trainable weights '
-      'after freezing the conv base:', len(model.trainable_weights))
-
-
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2, rescale=1./255)
 
