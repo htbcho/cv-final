@@ -14,7 +14,6 @@ from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.applications.vgg16 import decode_predictions
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.utils.vis_utils import plot_model
 
 
 
@@ -69,9 +68,23 @@ history = model.fit_generator(
       epochs=22,
       validation_data=valid_generator,
       validation_steps=50,
-      verbose=2)
+      verbose=1)
 
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('vgg_training.png')
 
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('vgg_loss.png')
 
 model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
 del model  # deletes the existing model
