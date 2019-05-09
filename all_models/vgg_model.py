@@ -14,6 +14,7 @@ from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.applications.vgg16 import decode_predictions
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.utils.vis_utils import plot_model
 
 
 
@@ -38,7 +39,9 @@ model.add(Dropout(0.5))
 model.add(layers.Dense(29, activation='softmax'))
 
 model.summary()
-vgg_model.trainable = False
+
+
+
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2, rescale=1./255)
 
@@ -59,7 +62,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  shuffle=True)
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=tf.train.AdagradOptimizer(0.001),
+              optimizer=optimizers.RMSprop(lr=2e-5),
               metrics=["accuracy"])
 
 history = model.fit_generator(
@@ -68,7 +71,7 @@ history = model.fit_generator(
       epochs=22,
       validation_data=valid_generator,
       validation_steps=50,
-      verbose=1)
+      verbose=2)
 
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
