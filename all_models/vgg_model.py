@@ -39,7 +39,7 @@ model.add(layers.Dense(29, activation='softmax'))
 
 model.summary()
 
-model.trainable = False
+vgg_model.trainable = False
 
 
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input, validation_split=0.2, rescale=1./255)
