@@ -2,7 +2,7 @@
 
 ## How to run our program!
 
-Have Tensorflow installed or install a Tensorflow virtual environment with conda using the following commands:
+Have Tensorflow installed or install a Tensorflow virtual environment with Conda/MiniConda using the following commands:
 ```
 conda create -n tensorflow_env tensorflow
 conda activate tensorflow_env
