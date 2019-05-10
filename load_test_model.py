@@ -24,7 +24,6 @@ import matplotlib.pyplot as plt
 
 
 
-
 app = Flask(__name__) #, static_folder='.'
 app._static_folder = os.path.abspath("templates/static/")
 CORS(app)
@@ -46,7 +45,7 @@ start = 0
 global url
 url = ''
 
-@app.route('/model', methods = ['POST', 'GET']) #what is a file path
+@app.route('/model', methods = ['POST', 'GET'])
 def predict():
     ret = ''
     if request.method == 'POST':
@@ -56,19 +55,15 @@ def predict():
         start = 1
     # global start
     if start == 1:
-        # urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
-        img = image.load_img('/Users/ella/Desktop/curr.jpg', target_size=(224,224))
-        # print(img)
-        img_array = image.img_to_array(img)
+        urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
+        img_array = image.img_to_array(img, target_size = (64,64))
         img_array = np.divide(img_array, 255.0)
-
         img_array_expanded_dims = np.expand_dims(img_array, axis=0)
-        # loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/') # THE WORKING MODEL
-        # loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1557093069/')
-        loaded_model = load_model('vgg_model.h5')
-
+        loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/') # THE WORKING MODEL
+        # loaded_model = load_model('vgg_model.h5') # VGG16
         # loaded_model = tf.contrib.saved_model.load_keras_model('./tmp_dir/1556737843/') # MOBILENET
-        # preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims)
+        # preprocessed_image = applications.mobilenet.preprocess_input(img_array_expanded_dims) # MOBILENET
+
         result = loaded_model.predict(img_array_expanded_dims)
         prediction = labels[np.argmax(result)]
         ret = { 'label': prediction }

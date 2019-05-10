@@ -72,23 +72,6 @@ history = model.fit_generator(
       validation_steps=50,
       verbose=2)
 
-plt.figure(0, figsize =(7,7))
-plt.plot(history.history['acc'])
-plt.plot(history.history['val_acc'])
-plt.title('Model accuracy')
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
-plt.savefig('vgg_training.png')
-
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('Model loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
-plt.savefig('vgg_loss.png')
-
 model.save('vgg_model.h5')  # creates a HDF5 file 'my_model.h5'
 del model  # deletes the existing model
 loaded_model = load_model('vgg_model.h5')
