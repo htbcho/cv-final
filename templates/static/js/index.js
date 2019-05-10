@@ -2,7 +2,7 @@ $(document).ready(function(){
     const label = '';
     // const word_bank = ["CAT", "DOG", "YAY", "VISION", "FUN", "DAD", "EYE"];
     // const word_bank = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK", "LL", "MM", "NN", "OO", "PP", "QQ", "RR", "SS", "TT", "UU", "VV", "WW", "XX", "YY", "ZZ"]
-    const word_bank = ["HOW", "DOG", "YOU", "POP", "I"];
+    const word_bank = ["HI", "DIG", "POP", "I", "GO"];
     let word;
     let all_letters;
     let curr_index;
