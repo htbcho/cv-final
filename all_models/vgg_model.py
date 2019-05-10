@@ -61,7 +61,7 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  shuffle=True)
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=optimizers.RMSprop(lr=2e-5),
+              optimizer=optimizers.RMSprop(lr=2e-4),
               metrics=['acc'])
 
 history = model.fit_generator(
