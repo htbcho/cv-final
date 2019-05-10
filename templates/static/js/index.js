@@ -2,7 +2,7 @@ $(document).ready(function(){
     const label = '';
     // const word_bank = ["CAT", "DOG", "YAY", "VISION", "FUN", "DAD", "EYE"];
     // const word_bank = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK", "LL", "MM", "NN", "OO", "PP", "QQ", "RR", "SS", "TT", "UU", "VV", "WW", "XX", "YY", "ZZ"]
-    const word_bank = ["HOW", "DOG"];
+    const word_bank = ["HOW", "DOG", "YOU", "POP", "I"];
     let word;
     let all_letters;
     let curr_index;
@@ -49,7 +49,7 @@ $(document).ready(function(){
 
     function draw(video, canvas, context, frameRate) {
         var ret = context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var url = canvas.toDataURL("image/jpeg"); 
+        var url = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream"); 
         var image = document.getElementById("mirror");
         image.src = url;
 
@@ -72,12 +72,15 @@ $(document).ready(function(){
         $.get("/model", function(data, status){
             var label = data.label;
             console.log("predicted: " + label);
-            if (label === word.charAt(curr_index)) {
-                console.log("Correct!");
-                var ele = all_letters[curr_index];
-                ele.style.color = "#1fa851";
-                curr_index++;
+            if (word != null) {
+            	if (label === word.charAt(curr_index)) {
+	                console.log("Correct!");
+	                var ele = all_letters[curr_index];
+	                ele.style.color = "#1fa851";
+	                curr_index++;
+	            }
             }
+            
         });
         
     }

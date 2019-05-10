@@ -21,6 +21,9 @@ import cv2
 import matplotlib
 matplotlib.use('PS')
 import matplotlib.pyplot as plt
+import time
+import uuid
+import glob
 
 
 
@@ -45,6 +48,9 @@ start = 0
 global url
 url = ''
 
+global count
+count = 0
+
 @app.route('/model', methods = ['POST', 'GET'])
 def predict():
     ret = ''
@@ -55,10 +61,16 @@ def predict():
         start = 1
     # global start
     if start == 1:
-        urllib.request.urlretrieve(url, 'webcam_images/curr.jpg')
-        img = image.load_img('webcam_images/curr.jpg', target_size=(64,64))
+        global count
+        count+=1
+        time.sleep(1)
+        i = str(uuid.uuid4())
+        imgdir = 'webcam_images/curr' + i + '.jpg'
+        urllib.request.urlretrieve(url, imgdir)
+        img = image.load_img(imgdir, target_size=(64,64))
+        # print(os.)
         img_array = image.img_to_array(img)
-        img_array = np.divide(img_array, 255.0)
+        # img_array = np.divide(img_array, 255.0)
         img_array_expanded_dims = np.expand_dims(img_array, axis=0)
         loaded_model = tf.contrib.saved_model.load_keras_model('./scratch_tmp_dir/1556848947/') # THE WORKING MODEL
         # loaded_model = load_model('vgg_model.h5') # VGG16
@@ -68,6 +80,11 @@ def predict():
         result = loaded_model.predict(img_array_expanded_dims)
         prediction = labels[np.argmax(result)]
         ret = { 'label': prediction }
+        if count > 20:
+            filelist = [ f for f in os.listdir('webcam_images') if f.endswith(".jpg") ]
+            for f in filelist:
+                os.remove(os.path.join('webcam_images/', f))
+            count = 0
         # os.remove(img_dir)
         return jsonify(ret)
 
