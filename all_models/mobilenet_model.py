@@ -69,7 +69,7 @@ history = model.fit_generator(generator=train_generator,
                     steps_per_epoch=train_step_size,
                     validation_data=valid_generator,
                     validation_steps=valid_step_size,
-                    epochs=3
+                    epochs=5
 )
 
 
