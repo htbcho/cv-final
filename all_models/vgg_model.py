@@ -61,9 +61,8 @@ valid_generator = train_datagen.flow_from_directory(train_dir,
                                                  shuffle=True)
 
 model.compile(loss='categorical_crossentropy',
-             # optimizer=optimizers.RMSprop(lr=2e-5),
-             optimizer=tf.train.AdagradOptimizer(0.001),
-             metrics=["accuracy"])
+              optimizer=optimizers.RMSprop(lr=2e-5),
+              metrics=['acc'])
 
 history = model.fit_generator(
       train_generator,
@@ -74,7 +73,6 @@ history = model.fit_generator(
       verbose=2)
 
 plt.figure(0, figsize =(7,7))
-
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
 plt.title('Model accuracy')
